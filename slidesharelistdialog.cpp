@@ -56,6 +56,8 @@ slideshareListDialog::~slideshareListDialog()
 
 void slideshareListDialog::refreshList()
 {
+    ui->downloadProgressBar->setMaximum(0);
+    ui->downloadProgressBar->setVisible(true);
     ui->listTab->setEnabled(false);
     ui->downloadButton->setEnabled(false);
     ui->uploadButton->setEnabled(false);
@@ -159,7 +161,8 @@ void slideshareListDialog::fillList()
         QListWidgetItem *k = new QListWidgetItem(j.title);
         ui->spreadsheetList->addItem(k);
     }
-
+    ui->downloadProgressBar->setMaximum(100);
+    ui->downloadProgressBar->setVisible(false);
     ui->listTab->setEnabled(true);
     ui->downloadButton->setEnabled(true);
     ui->uploadButton->setEnabled(true);
