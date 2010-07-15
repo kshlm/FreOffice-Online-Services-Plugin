@@ -106,7 +106,7 @@ void slideshareListDialog::downloadButtonClickedSlot()
     SlideShareDocument p = list[tmp->currentRow()];
     QString durl = p.downloadUrl;
 
-    QString saveFileName = QFileDialog::getSaveFileName(this, "Save file", QDesktopServices::storageLocation(QDesktopServices::HomeLocation).append("/").append(p.title).append(".").append(p.format), QString("(*.").append(p.format).append(")"));
+    QString saveFileName = QFileDialog::getSaveFileName(this, "Save file", QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation).append("/").append(p.title).append(".").append(p.format), QString("(*.").append(p.format).append(")"));
     qDebug() << saveFileName << endl;
     if("" == saveFileName)
     {
