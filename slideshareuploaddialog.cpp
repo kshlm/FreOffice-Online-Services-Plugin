@@ -93,6 +93,6 @@ void slideshareUploadDialog::uploadButtonClickedSlot()
 
 void slideshareUploadDialog::uploadDoneSlot()
 {
-    ui->uploadLabel->setText(tr("Upload done. It will take some time before the file appears in the list. Please be patient."));
+    ui->uploadLabel->setText(tr("Upload done. It will take some time before the file appears in the list. \nPlease be patient."));
     ui->doneButton->setEnabled(true);
 }
