@@ -84,7 +84,7 @@ void slideshareUploadDialog::uploadButtonClickedSlot()
         ui->uploadLabel->setText(tr("Uploading file..."));
         service->setSourceFile(&ui->fileSelectEdit->text());
         service->setSlideTitle(&ui->titleEdit->text());
-        service->setDescription(&ui->descriptionBox->toPlainText());
+        service->setDescription(&ui->descriptionBox->text());
         service->setTags(&ui->tagsEdit->text());
         service->setFormat(new QString(QFileInfo(ui->fileSelectEdit->text()).suffix()));
         service->upload();
@@ -93,6 +93,6 @@ void slideshareUploadDialog::uploadButtonClickedSlot()
 
 void slideshareUploadDialog::uploadDoneSlot()
 {
-    ui->uploadLabel->setText(tr("Upload done"));
+    ui->uploadLabel->setText(tr("Upload done. It will take some time before the file appears in the list. Please be patient."));
     ui->doneButton->setEnabled(true);
 }

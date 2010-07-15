@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>227</height>
+    <height>173</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,9 +16,6 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QFormLayout" name="formLayout">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::ExpandingFieldsGrow</enum>
-     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
@@ -31,7 +28,7 @@
        <item>
         <widget class="QLineEdit" name="fileSelectEdit">
          <property name="enabled">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -57,9 +54,6 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="titleEdit"/>
      </item>
-     <item row="2" column="1">
-      <widget class="QPlainTextEdit" name="descriptionBox"/>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
@@ -67,8 +61,8 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="tagsEdit"/>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="descriptionBox"/>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
@@ -76,6 +70,9 @@
         <string>Tags</string>
        </property>
       </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="tagsEdit"/>
      </item>
     </layout>
    </item>

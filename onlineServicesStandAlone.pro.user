@@ -92,7 +92,6 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString">LESS=-R</value>
     <value type="QString">LOGNAME=maemo</value>
@@ -162,7 +161,6 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString">LESS=-R</value>
     <value type="QString">LOGNAME=maemo</value>
@@ -206,17 +204,18 @@
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
     <value type="QString">ALSA_PLUGINS_DIR=/usr/lib/alsa-lib</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-FUPWNjaJHQ,guid=1a8d0ffabc19c956cdc9ec2e00000037</value>
-    <value type="QString">DESKTOP_SESSION=gnome</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-FfenDiZGv7,guid=72dbc6d7283e26da69f7ce3500001f25</value>
+    <value type="QString">DESKTOP_SESSION=kde</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-eRfcWA</value>
     <value type="QString">GOARCH=amd64</value>
     <value type="QString">GOBIN=/usr/bin</value>
     <value type="QString">GOOS=linux</value>
     <value type="QString">GOROOT=/usr/lib/go</value>
-    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/maemo/.gtkrc-1.2-gnome2</value>
+    <value type="QString">GPG_AGENT_INFO=/tmp/gpg-59sFX6/S.gpg-agent:31687:1</value>
+    <value type="QString">GS_LIB=/home/maemo/.fonts</value>
+    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/maemo/.gtkrc-2.0:/home/maemo/.gtkrc-2.0-kde4:/home/maemo/.kde4/share/config/gtkrc-2.0</value>
+    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/maemo/.gtkrc::/home/maemo/.kde4/share/config/gtkrc</value>
     <value type="QString">G_BROKEN_FILENAMES=1</value>
     <value type="QString">HG=/usr/bin/hg</value>
     <value type="QString">HISTCONTROL=erasedups</value>
@@ -224,30 +223,37 @@
     <value type="QString">HOME=/home/maemo</value>
     <value type="QString">INPUTRC=/etc/inputrc</value>
     <value type="QString">KDEDIRS=:/home/maemo/koffice-inst</value>
+    <value type="QString">KDE_FULL_SESSION=true</value>
+    <value type="QString">KDE_MULTIHEAD=false</value>
+    <value type="QString">KDE_SESSION_UID=1000</value>
+    <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString">LESS=-R</value>
     <value type="QString">LOGNAME=maemo</value>
+    <value type="QString">MALLOC_CHECK_=3</value>
     <value type="QString">MOZ_PLUGIN_PATH=/usr/lib/mozilla/plugins</value>
-    <value type="QString">ORBIT_SOCKETDIR=/tmp/orbit-maemo</value>
     <value type="QString">PATH=/usr/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core:/home/maemo/koffice-inst/bin</value>
     <value type="QString">PKG_CONFIG_PATH=/usr/lib/pkgconfig</value>
     <value type="QString">PS3=> </value>
     <value type="QString">PS4=+ </value>
-    <value type="QString">PWD=/home/maemo</value>
+    <value type="QString">PWD=/home/maemo/Documents</value>
     <value type="QString">QTDIR=/usr/share/qt</value>
-    <value type="QString">SESSION_MANAGER=local/arch:@/tmp/.ICE-unix/2824,unix/arch:/tmp/.ICE-unix/2824</value>
+    <value type="QString">QT_PLUGIN_PATH=/home/maemo/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
+    <value type="QString">SESSION_MANAGER=local/arch:@/tmp/.ICE-unix/31736,unix/arch:/tmp/.ICE-unix/31736</value>
     <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SHLVL=0</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-eRfcWA/ssh</value>
+    <value type="QString">SHLVL=1</value>
+    <value type="QString">SSH_AGENT_PID=31690</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-fzmdW31689/agent.31689</value>
     <value type="QString">USER=maemo</value>
     <value type="QString">WINDOWPATH=7</value>
+    <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_CACHE_HOME=/home/maemo/.cache</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
     <value type="QString">XDG_CONFIG_HOME=/home/maemo/.config</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share</value>
     <value type="QString">XDG_DATA_HOME=/home/maemo/.local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=34c09630a6ae9ad92365c03300000216-1279076353.685608-349349716</value>
+    <value type="QString">XDG_SESSION_COOKIE=34c09630a6ae9ad92365c03300000216-1279084273.67966-555969312</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">true</value>

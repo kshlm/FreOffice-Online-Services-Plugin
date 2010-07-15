@@ -278,7 +278,7 @@ void SlideShare::parseList()
         p->thumbnailSmall = child.firstChildElement("ThumbnailSmallURL").text();
         p->downloadUrl = p->url.append("/download");
         QString download = child.firstChildElement("Download").text();
-
+        qDebug() << p->title << p->format ;
         if(download == "1")
         {
             if (p->format == "odt" || p->format == "doc")
