@@ -36,3 +36,4 @@ SOURCES += googlecontenthandler.cpp \
     googlelistdialog.cpp \
     mimetypes.cpp \
     googleuploaddialog.cpp
+OTHER_FILES += README.txt
