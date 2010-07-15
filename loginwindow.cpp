@@ -49,7 +49,8 @@ LoginWindow::LoginWindow(QWidget *parent)
     connect(m_authDialog->comboBox, SIGNAL(activated(int)), this, SLOT(serviceSelected(int)));
 
     m_authDialog->userEdit->setFocus();
-    show();
+//    show();
+    exec();
 }
 
 void LoginWindow::loginService()
@@ -69,6 +70,7 @@ void LoginWindow::loginService()
         service->setUsername(new QString(m_authDialog->userEdit->text()));
         service->setPassword(new QString(m_authDialog->passwordEdit->text()));
         service->login();
+        setShowProgressIndicator(true);
         connect(service,SIGNAL(loginDone(bool)), this, SLOT(slideShareLoginDoneSlot(bool)));
     }
 }
@@ -124,6 +126,7 @@ void LoginWindow::slideShareLoginDoneSlot(bool loginStatus)
 
 void LoginWindow::enableWidgets()
 {
+    setShowProgressIndicator(false);
     m_authDialog->loginButton->setEnabled(true);
     m_authDialog->userEdit->setEnabled(true);
     m_authDialog->passwordEdit->setEnabled(true);
