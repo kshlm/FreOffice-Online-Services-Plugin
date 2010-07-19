@@ -30,6 +30,7 @@
 #include <QtGui>
 #include <QX11Info>
 
+#include <QMaemo5InformationBox>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
@@ -49,13 +50,17 @@ LoginWindow::LoginWindow(QWidget *parent)
     connect(m_authDialog->comboBox, SIGNAL(activated(int)), this, SLOT(serviceSelected(int)));
 
     m_authDialog->userEdit->setFocus();
-//    show();
-    exec();
+    show();
+//    exec();
 }
 
 void LoginWindow::loginService()
 {
-    disableWidgets();
+    if("" == m_authDialog->userEdit->text() || "" == m_authDialog->passwordEdit->text()) {
+        QMaemo5InformationBox::information(this, "Enter both username and password", QMaemo5InformationBox::DefaultTimeout);
+        return;
+    }
+    disableWidgets();	
     if (0 == m_authDialog->comboBox->currentIndex()) {
         gdoc = new GoogleDocumentService();
         setShowProgressIndicator(true);
@@ -95,7 +100,7 @@ void LoginWindow::authenticated(bool success)
         ld->show();
     }
     else {
-        QMessageBox::information(this, tr("Login Failed"), tr("Check your username & password"));
+        QMaemo5InformationBox::information(this, ("<p>Login Failed</p><p>Check your username & password</p>"), QMaemo5InformationBox::NoTimeout);
         enableWidgets();
     }
 }
@@ -113,7 +118,7 @@ void LoginWindow::setShowProgressIndicator(bool visible)
 void LoginWindow::slideShareLoginDoneSlot(bool loginStatus)
 {if(loginStatus == false)
     {
-        QMessageBox::information(this, tr("Login Failed"), tr("Check your username & password"));
+        QMaemo5InformationBox::information(this,"<p>Login Failed.</p><p>Check your username and password</p> ", QMaemo5InformationBox::NoTimeout);
         enableWidgets();
     }
     else

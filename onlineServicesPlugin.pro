@@ -3,6 +3,7 @@
 # #####################################################################
 QT += network
 QT += xml
+QT += maemo5
 TEMPLATE = lib
 CONFIG += plugin
 TARGET = OnlineServicesPlugin

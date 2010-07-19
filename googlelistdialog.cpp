@@ -22,7 +22,7 @@
 #include "googledocument.h"
 #include "googleuploaddialog.h"
 
-#include <QMessageBox>
+#include <QMaemo5InformationBox>
 #include <QFileDialog>
 #include <QDesktopServices>
 
@@ -100,7 +100,7 @@ void googleListDialog::fillList(bool status)
         }
     }
     else {
-        QMessageBox::information(this, tr("Error"), tr("An error occured while fetching document list"));
+        QMaemo5InformationBox::information(this, "<p><b>Error</b></p> <p>An error occured while fetching document list</p>", QMaemo5InformationBox::NoTimeout);
     }
     ui->downloadProgressBar->setMaximum(100);
     ui->downloadProgressBar->setVisible(false);
@@ -133,7 +133,7 @@ void googleListDialog::downloadButtonClickedSlot()
     }
 
     if(-1 == tmp->currentRow()) {
-        QMessageBox::information(this, QString("No selection"), QString("Please select a file from the list"));
+        QMaemo5InformationBox::information(this, "Select a file from the list to download", QMaemo5InformationBox::DefaultTimeout);
         return;
     }
     GoogleDocument *doc = list[tmp->currentRow()];
@@ -174,9 +174,9 @@ void googleListDialog::downloadDoneSlot(bool status)
     ui->refreshButton->setEnabled(true);
     ui->uploadButton->setEnabled(true);
     if(status)
-        QMessageBox::information(this, "Download done", "The file has finished downloading");
+        QMaemo5InformationBox::information(this, "The file has finished downloading", QMaemo5InformationBox::DefaultTimeout);
     else
-        QMessageBox::information(this, tr("Error"), tr("An error occured while downloading the document"));
+        QMaemo5InformationBox::information(this, "<p><b>Error</b></p> <p>An error occured while downloading the document</p>", QMaemo5InformationBox::NoTimeout);
 }
 
 void googleListDialog::updateProgressBar(qint64 bytesDone, qint64 bytesTotal)

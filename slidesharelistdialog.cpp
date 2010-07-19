@@ -22,12 +22,12 @@
 #include "slideshareuploaddialog.h"
 #include "slideshareDocument.h"
 
-#include <QMessageBox>
 #include <QFileDialog>
 #include <QDesktopServices>
 #include <QListWidgetItem>
 #include <QMenu>
 #include <QMouseEvent>
+#include <QMaemo5InformationBox>
 
 slideshareListDialog::slideshareListDialog(SlideShare *s, QWidget *parent):
         QDialog(parent),
@@ -99,7 +99,7 @@ void slideshareListDialog::downloadButtonClickedSlot()
 
     if(tmp->currentRow() == -1)
     {
-        QMessageBox::information(this, QString("No selection"), QString("Please select a file from the list"));
+        QMaemo5InformationBox::information(this, "Select a file from the list to download", QMaemo5InformationBox::DefaultTimeout);
         return;
     }
 
@@ -183,7 +183,7 @@ void slideshareListDialog::downloadDoneSlot()
     ui->downloadButton->setEnabled(true);
     ui->refreshButton->setEnabled(true);
     ui->uploadButton->setEnabled(true);
-    QMessageBox::information(this, "Download done", "The file has finished downloading");
+    QMaemo5InformationBox::information(this, "The file has finished downloading", QMaemo5InformationBox::DefaultTimeout);
 }
 
 bool slideshareListDialog::eventFilter(QObject *obj, QEvent *event)

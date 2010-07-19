@@ -126,6 +126,7 @@ void SlideShare::login()
 
 void SlideShare::afterLogin()
 {
+    qDebug() << reply->readAll();
     if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 302)
     {
         if(QString("http://www.slideshare.net/").append(username) == reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString())
