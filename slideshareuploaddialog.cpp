@@ -22,7 +22,7 @@
 #include "slideshare.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
+#include <QMaemo5InformationBox>
 
 slideshareUploadDialog::slideshareUploadDialog(SlideShare *service, QWidget *parent) :
     QDialog(parent),
@@ -71,7 +71,7 @@ void slideshareUploadDialog::uploadButtonClickedSlot()
 {
     if(ui->fileSelectEdit->text() == "" || ui->titleEdit->text() == "")
     {
-        QMessageBox::information(this,"Incomplete parameters","Please enter atleast filename and title");
+        QMaemo5InformationBox::information(this,"Please enter atleast filename and title");
         return;
     }
     else
@@ -81,7 +81,6 @@ void slideshareUploadDialog::uploadButtonClickedSlot()
         ui->descriptionBox->setEnabled(false);
         ui->tagsEdit->setEnabled(false);
         ui->uploadButton->setEnabled(false);
-        ui->uploadLabel->setText(tr("Uploading file..."));
         service->setSourceFile(&ui->fileSelectEdit->text());
         service->setSlideTitle(&ui->titleEdit->text());
         service->setDescription(&ui->descriptionBox->text());
@@ -93,6 +92,6 @@ void slideshareUploadDialog::uploadButtonClickedSlot()
 
 void slideshareUploadDialog::uploadDoneSlot()
 {
-    ui->uploadLabel->setText(tr("Upload done. It'll take some time for the file to appear in the list. Please be patient."));
+    QMaemo5InformationBox::information(this, "<p><b>Upload done</b></p> It'll take some time for the file to appear in the list. Please be patient.");
     ui->doneButton->setEnabled(true);
 }

@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>514</width>
-    <height>180</height>
+    <height>147</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -94,19 +94,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="uploadLabel">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">

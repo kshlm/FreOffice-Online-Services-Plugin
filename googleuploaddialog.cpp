@@ -22,7 +22,7 @@
 #include "googledocumentservice.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
+#include <QMaemo5InformationBox>
 
 googleUploadDialog::googleUploadDialog(GoogleDocumentService *service, QWidget *parent):
         QDialog(parent),
@@ -75,7 +75,7 @@ void googleUploadDialog::uploadButtonClickedSlot()
 {
     if(ui->fileSelectEdit->text() == "" || ui->titleEdit->text() == "")
     {
-        QMessageBox::information(this,"Incomplete parameters","Please enter both filename and title");
+        QMaemo5InformationBox::information(this,"Please enter both filename and title");
         return;
     }
     else
@@ -83,7 +83,6 @@ void googleUploadDialog::uploadButtonClickedSlot()
         ui->fileSelectButton->setEnabled(false);
         ui->titleEdit->setEnabled(false);
         ui->uploadButton->setEnabled(false);
-        ui->uploadLabel->setText(tr("Uploading file.."));
         service->uploadDocument(&ui->fileSelectEdit->text(), &ui->titleEdit->text());
         connect(service, SIGNAL(uploadDone(bool)), this, SLOT(uploadDoneSlot(bool)));
     }
@@ -92,11 +91,10 @@ void googleUploadDialog::uploadButtonClickedSlot()
 void googleUploadDialog::uploadDoneSlot(bool status)
 {
     if(!status) {
-        ui->uploadLabel->setText(tr("Upload failed"));
-        ui->uploadProgress->setValue(0);
+        QMaemo5InformationBox::information(this,"\nUpload failed\n", QMaemo5InformationBox::NoTimeout);
     }
     else {
-        ui->uploadLabel->setText(tr("Upload completed"));
+        QMaemo5InformationBox::information(this, "Upload completed");
     }
     ui->doneButton->setEnabled(true);
 }
