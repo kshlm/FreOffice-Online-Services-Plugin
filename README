@@ -1,15 +1,7 @@
 Build Instructions
 ******************
-
-There are two qt project files avaiable.
-
-onlineServicesStandAlone.pro :
-This project file can be used to make a standalone application.
-A "onlineServicesStandAlone" executable is generated.
-onlineServicesPlugin.pro:
-This project file can be used to create the FreOffice plugin.
-A "libOnlineServicesPlugin.so" is generated. This file must be placed in "/usr/lib/freoffice/" for the plugin to be activated.
-
+Plugin can be built only on maemo as there are dependencies on QtMaemo libraries. Therefore, no more standalone support.
+To build it use Scratchbox or the Nokia Qt SDK.
 
 Features
 ********
