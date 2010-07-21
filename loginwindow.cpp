@@ -48,7 +48,7 @@ LoginWindow::LoginWindow(QWidget *parent)
 
     connect(m_authDialog->loginButton, SIGNAL(clicked()), this, SLOT(loginService()));
     connect(m_authDialog->comboBox, SIGNAL(activated(int)), this, SLOT(serviceSelected(int)));
-
+    m_authDialog->userEdit->setInputMethodHints(Qt::ImhNoAutoUppercase);
     m_authDialog->userEdit->setFocus();
     show();
 //    exec();
@@ -60,7 +60,7 @@ void LoginWindow::loginService()
         QMaemo5InformationBox::information(this, "Enter both username and password", QMaemo5InformationBox::DefaultTimeout);
         return;
     }
-    disableWidgets();	
+    disableWidgets();
     if (0 == m_authDialog->comboBox->currentIndex()) {
         gdoc = new GoogleDocumentService();
         setShowProgressIndicator(true);

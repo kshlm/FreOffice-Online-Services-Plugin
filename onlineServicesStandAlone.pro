@@ -7,6 +7,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 QT += network
 QT += xml
+QT += maemo5
 
 # Input
 HEADERS += googlecontenthandler.h \
