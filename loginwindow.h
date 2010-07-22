@@ -30,14 +30,13 @@
 
 class SlideShare;
 class GoogleDocumentService;
-
+class QSettings;
 class LoginWindow : public QDialog
 {
     Q_OBJECT
 
 public:
     LoginWindow(QWidget *parent = 0);
-    GoogleDocumentService * googleService() {  return gdoc; }
     void setShowProgressIndicator(bool visible);
 
 private slots:
@@ -50,8 +49,10 @@ private:
     Ui_Dialog *m_authDialog;
     GoogleDocumentService *gdoc;
     SlideShare *service;
+    QSettings *settings;
     void enableWidgets();
     void disableWidgets();
+    void saveDetails(QString &key);
 };
 
 #endif // LOGINWINDOW_H

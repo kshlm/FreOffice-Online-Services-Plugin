@@ -29,6 +29,7 @@
 
 #include <QtGui>
 #include <QX11Info>
+#include <QSettings>
 
 #include <QMaemo5InformationBox>
 #include <X11/Xlib.h>
@@ -36,7 +37,8 @@
 
 LoginWindow::LoginWindow(QWidget *parent)
         : QDialog(parent),
-          m_authDialog(new Ui_Dialog)
+          m_authDialog(new Ui_Dialog),
+          settings(new QSettings("freoffice","online-services-plugin"), this)
 {
     m_authDialog->setupUi(this);
 
@@ -48,6 +50,8 @@ LoginWindow::LoginWindow(QWidget *parent)
 
     connect(m_authDialog->loginButton, SIGNAL(clicked()), this, SLOT(loginService()));
     connect(m_authDialog->comboBox, SIGNAL(activated(int)), this, SLOT(serviceSelected(int)));
+    connect(m_authDialog->saveCheckBox, SIGNAL(stateChanged(int)), this, SLOT(saveDetailsCheckedSlot(int)));
+    fillDetails();
     m_authDialog->userEdit->setInputMethodHints(Qt::ImhNoAutoUppercase);
     m_authDialog->userEdit->setFocus();
     show();
@@ -89,12 +93,14 @@ void LoginWindow::serviceSelected(int index)
         m_authDialog->userEdit->clear();
         m_authDialog->passwordEdit->clear();
     }
+    fillDetails();
     m_authDialog->userEdit->setFocus();
 }
 
 void LoginWindow::authenticated(bool success)
 {
     if (success) {
+        saveDetails("user/gdocs");
         googleListDialog *ld = new googleListDialog(gdoc, this);
         this->accept();;
         ld->show();
@@ -123,6 +129,7 @@ void LoginWindow::slideShareLoginDoneSlot(bool loginStatus)
     }
     else
     {
+        saveDetails("user/slideshare");
         slideshareListDialog * fi = new slideshareListDialog(service, this);
         this->accept();
         fi->show();
@@ -144,4 +151,37 @@ void LoginWindow::disableWidgets()
     m_authDialog->userEdit->setEnabled(false);
     m_authDialog->passwordEdit->setEnabled(false);
     m_authDialog->comboBox->setEnabled(false);
+}
+
+void LoginWindow::saveDetails(QString &key)
+{
+    if(Qt::Checked == m_authDialog->saveCheckBox->checkState()) {
+        QMap<QString, QString> m;
+        m.insert("username", QString(m_authDialog->userEdit->text()));
+        m.insert("password", QString(m_authDialog->passwordEdit->text()));
+        settings->setValue(key, m);
+    }
+    else {
+        settings->remove(key);
+    }
+}
+
+void LoginWindow::fillDetails()
+{
+    QString key = "";
+    if(0 == m_authDialog->comboBox->currentIndex())
+        key = "user/gdocs";
+    else if(1 == m_authDialog->comboBox->currentIndex())
+        key = "user/slideshare";
+    else
+        return;
+    if(settings->contains(key)) {
+        QMap<QString, QString> m = settings->value(key).value<QMap<QString, QString> >();
+        m_authDialog->userEdit->setText(m.value("username"));
+        m_authDialog->passwordEdit->setText(m.value("password"));
+        m_authDialog->saveCheckBox->setCheckState(Qt::Checked);
+    }
+    else
+        m_authDialog->saveCheckBox->setCheckState(Qt::Unchecked);
+    return;
 }

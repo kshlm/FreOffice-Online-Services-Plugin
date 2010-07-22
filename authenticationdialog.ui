@@ -73,11 +73,22 @@
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="loginButton">
-     <property name="text">
-      <string>Sign In</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="saveCheckBox">
+       <property name="text">
+        <string>Save Details</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="loginButton">
+       <property name="text">
+        <string>Sign In</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
