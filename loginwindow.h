@@ -37,6 +37,7 @@ class LoginWindow : public QDialog
 
 public:
     LoginWindow(QWidget *parent = 0);
+    ~LoginWindow();
     void setShowProgressIndicator(bool visible);
 
 private slots:
@@ -53,6 +54,7 @@ private:
     void enableWidgets();
     void disableWidgets();
     void saveDetails(QString &key);
+    void fillDetails();
 };
 
 #endif // LOGINWINDOW_H

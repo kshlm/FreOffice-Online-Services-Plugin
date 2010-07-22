@@ -111,6 +111,7 @@ void SlideShare::setSaveFileName(QString *saveFileName)
 
 void SlideShare::login()
 {
+    qDebug() << ">>>>>>>>> SlideShare::login()";
     QUrl *login = new QUrl(QString("http://www.slideshare.net/login"));
     QByteArray data;
     data.append(QString("user_login=").append(username).toUtf8());
@@ -126,7 +127,7 @@ void SlideShare::login()
 
 void SlideShare::afterLogin()
 {
-    qDebug() << reply->readAll();
+    qDebug() << ">>>>>>>>> SlideShare::afterLogin()";
     if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 302)
     {
         if(QString("http://www.slideshare.net/").append(username) == reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString())
@@ -138,6 +139,7 @@ void SlideShare::afterLogin()
 
 void SlideShare::download(QString *durl)
 {
+    qDebug() << ">>>>>>>>> SlideShare::download()";
     QUrl *dload = new QUrl(*durl) ;
     QNetworkRequest request;
     request.setUrl(*dload);
@@ -158,6 +160,7 @@ void SlideShare::download(QString *durl)
 }
 void SlideShare::saveFile()
 {
+    qDebug() << ">>>>>>>>> SlideShare::saveFile()";
     if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 302)
     {
         reply = manager.get(QNetworkRequest(reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl()));
@@ -178,6 +181,7 @@ void SlideShare::saveFile()
 
 void SlideShare::upload()
 {
+    qDebug() << ">>>>>>>>> SlideShare::upload()";
     QDateTime *time = new QDateTime();
     QString ts;
     ts.setNum(time->toTime_t());
@@ -229,6 +233,7 @@ void SlideShare::upload()
 
 void SlideShare::listDocuments()
 {
+    qDebug() << ">>>>>>>>> SlideShare::listDocuments()";
     QDateTime *time = new QDateTime(QDateTime::currentDateTime());
     QString ts;
     ts.setNum(time->toTime_t());
@@ -257,6 +262,7 @@ void SlideShare::listDocuments()
 }
 void SlideShare::parseList()
 {
+    qDebug() << ">>>>>>>>> SlideShare::parseList()" ;
     QDomDocument doc;
     QByteArray data = reply->readAll();
     doc.setContent(data);
@@ -279,7 +285,6 @@ void SlideShare::parseList()
         p->thumbnailSmall = child.firstChildElement("ThumbnailSmallURL").text();
         p->downloadUrl = p->url.append("/download");
         QString download = child.firstChildElement("Download").text();
-        qDebug() << p->title << p->format ;
         if(download == "1")
         {
             if (p->format == "odt" || p->format == "doc")

@@ -122,7 +122,7 @@ void GoogleDocumentService::handleNetworkData(QNetworkReply *networkReply)
             emit uploadDone(true);
         }
         else {
-            qDebug() << ">>>>>>>>>>>>>> Revieved List" ;
+            qDebug() << ">>>>>>>>>>>>>> Received List" ;
             gHandler = new GoogleContentHandler();
             xmlReader.setContentHandler(gHandler);
             QByteArray data = networkReply->readAll();
