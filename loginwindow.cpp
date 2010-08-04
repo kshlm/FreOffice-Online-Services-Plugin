@@ -53,6 +53,7 @@ LoginWindow::LoginWindow(QWidget *parent)
     fillDetails();
     m_authDialog->userEdit->setInputMethodHints(Qt::ImhNoAutoUppercase);
     m_authDialog->userEdit->setFocus();
+    m_authDialog->saveCheckBox->setDisabled(true);
     show();
 }
 
@@ -96,15 +97,15 @@ void LoginWindow::serviceSelected(int index)
         m_authDialog->userEdit->clear();
         m_authDialog->passwordEdit->clear();
     }
-    fillDetails();
+//    fillDetails();
     m_authDialog->userEdit->setFocus();
 }
 
 void LoginWindow::authenticated(bool success)
 {
     if (success) {
-        QString key("user/gdocs");
-        saveDetails(key);
+//        QString key("user/gdocs");
+//        saveDetails(key);
         googleListDialog *ld = new googleListDialog(gdoc, this);
         this->accept();;
         ld->show();
@@ -133,8 +134,8 @@ void LoginWindow::slideShareLoginDoneSlot(bool loginStatus)
     }
     else
     {
-        QString key("user/slideshare");
-        saveDetails(key);
+//        QString key("user/slideshare");
+//        saveDetails(key);
         slideshareListDialog * fi = new slideshareListDialog(service, this);
         this->accept();
         fi->show();
@@ -148,7 +149,7 @@ void LoginWindow::enableWidgets()
     m_authDialog->userEdit->setEnabled(true);
     m_authDialog->passwordEdit->setEnabled(true);
     m_authDialog->comboBox->setEnabled(true);
-    m_authDialog->saveCheckBox->setEnabled(true);
+//    m_authDialog->saveCheckBox->setEnabled(true);
 }
 
 void LoginWindow::disableWidgets()
@@ -157,7 +158,7 @@ void LoginWindow::disableWidgets()
     m_authDialog->userEdit->setEnabled(false);
     m_authDialog->passwordEdit->setEnabled(false);
     m_authDialog->comboBox->setEnabled(false);
-    m_authDialog->saveCheckBox->setEnabled(false);
+//    m_authDialog->saveCheckBox->setEnabled(false);
 }
 
 void LoginWindow::saveDetails(QString &key)
