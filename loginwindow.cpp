@@ -62,6 +62,11 @@ LoginWindow::~LoginWindow()
     settings->sync();
 }
 
+void LoginWindow::setOpenDoc(const QString & openDocPath)
+{
+    this->openDocPath = openDocPath;
+}
+
 void LoginWindow::loginService()
 {
     if("" == m_authDialog->userEdit->text() || "" == m_authDialog->passwordEdit->text()) {

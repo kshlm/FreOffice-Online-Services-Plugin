@@ -10,11 +10,12 @@ TARGET = OnlineServicesPlugin
 target.path = /usr/lib/freoffice/
 INSTALLS += target
 DEPENDPATH += .
-INCLUDEPATH += . /usr/local/include/office /usr/include/office
+INCLUDEPATH += . \
+    /usr/local/include/office \
+    /usr/include/office
 
 # Input
-HEADERS += authenticator.h \
-    googlecontenthandler.h \
+HEADERS += googlecontenthandler.h \
     googledocument.h \
     googledocumentlist.h \
     googledocumentservice.h \
@@ -30,8 +31,7 @@ HEADERS += authenticator.h \
 FORMS += authenticationdialog.ui \
     filelistdialog.ui \
     uploaddialog.ui
-SOURCES += authenticator.cpp \
-    googlecontenthandler.cpp \
+SOURCES += googlecontenthandler.cpp \
     googledocument.cpp \
     googledocumentlist.cpp \
     googledocumentservice.cpp \

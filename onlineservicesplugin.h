@@ -5,6 +5,7 @@
 #include <QObject>
 
 class LoginWindow;
+class KoDocument;
 
 class onlineServicesPlugin: public QObject, public OfficeInterface
 {
@@ -20,6 +21,7 @@ public:
 
 private:
     QString name;
+    KoDocument *doc;
     LoginWindow *window;
 };
 

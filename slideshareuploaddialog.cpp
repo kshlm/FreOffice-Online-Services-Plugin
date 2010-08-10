@@ -22,6 +22,7 @@
 #include "slideshare.h"
 
 #include <QFileDialog>
+#include <QDesktopServices>
 #include <QMaemo5InformationBox>
 
 slideshareUploadDialog::slideshareUploadDialog(SlideShare *service, QWidget *parent) :
@@ -39,6 +40,11 @@ slideshareUploadDialog::slideshareUploadDialog(SlideShare *service, QWidget *par
 slideshareUploadDialog::~slideshareUploadDialog()
 {
     delete ui;
+}
+
+void slideshareUploadDialog::SetOpenDoc(const QString & openDocPath)
+{
+    ui->fileSelectEdit->setText(openDocPath);
 }
 
 void slideshareUploadDialog::changeEvent(QEvent *e)
@@ -62,9 +68,11 @@ void slideshareUploadDialog::uploadProgressSlot(qint64 sent, qint64 total)
 
 void slideshareUploadDialog::showFileDialog()
 {
+    QString currentFile = ("" == ui->fileSelectEdit->text())?QDesktopServices::DataLocation(QDesktopServices::DocumentsLocation): ui->fileSelectEdit->text();
     QString filter = "Supported Files (*.odt *.doc *.odp *.ppt *.ods *.xls)";
-    QString filename = QFileDialog::getOpenFileName(this,QString("Select File"),tr(""),filter, &filter);
-    ui->fileSelectEdit->setText(filename);
+    QString filename = QFileDialog::getOpenFileName(this,QString("Select File"), currentFile,filter, &filter);
+    if("" != filename)
+        ui->fileSelectEdit->setText(filename);
 }
 
 void slideshareUploadDialog::uploadButtonClickedSlot()

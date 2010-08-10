@@ -31,6 +31,7 @@ class slideshareUploadDialog : public QDialog {
 public:
     slideshareUploadDialog(SlideShare *service,QWidget *parent = 0);
     ~slideshareUploadDialog();
+    void setOpenDoc(const QString &);
 
 protected:
     void changeEvent(QEvent *e);

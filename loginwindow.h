@@ -39,6 +39,7 @@ public:
     LoginWindow(QWidget *parent = 0);
     ~LoginWindow();
     void setShowProgressIndicator(bool visible);
+    void setOpenDoc(const QString &);
 
 private slots:
     void loginService();
@@ -51,6 +52,7 @@ private:
     GoogleDocumentService *gdoc;
     SlideShare *service;
     QSettings *settings;
+    QString openDocPath;
     void enableWidgets();
     void disableWidgets();
     void saveDetails(QString &key);

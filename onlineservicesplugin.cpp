@@ -1,5 +1,6 @@
 #include "onlineservicesplugin.h"
 #include "loginwindow.h"
+#include <KoDocument.h>
 
 onlineServicesPlugin::onlineServicesPlugin()
 {
@@ -14,12 +15,15 @@ onlineServicesPlugin::~onlineServicesPlugin()
 
 void onlineServicesPlugin::setDocument(void *doc)
 {
-    Q_UNUSED(doc);
+    this->doc = (KoDocument *) doc;
 }
 
 QWidget *onlineServicesPlugin::view()
 {
     window = new LoginWindow();
+    if(doc) {
+        window->setOpenDoc(openDocPath);
+    }
     return window;
 }
 

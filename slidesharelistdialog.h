@@ -32,6 +32,7 @@ class slideshareListDialog : public QDialog
 public:
     slideshareListDialog(SlideShare *s, QWidget *parent = 0);
     ~slideshareListDialog();
+    void setOpenDoc(const QString &);
 
 protected:
     void changeEvent(QEvent *e);
@@ -48,6 +49,7 @@ private:
     Ui::fileListDialog *ui;
     SlideShare *service;
     bool eventFilter(QObject *, QEvent *);
+    QString openDocPath;
 
 };
 

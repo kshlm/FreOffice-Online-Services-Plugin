@@ -125,6 +125,9 @@ void slideshareListDialog::downloadButtonClickedSlot()
 void slideshareListDialog::uploadButtonClickedSlot()
 {
     slideshareUploadDialog *ud = new slideshareUploadDialog(service, this);
+    if("" != openDocPath) {
+        ud->setOpenDoc(openDocPath);
+    }
     ud->show();
     connect(ud, SIGNAL(accepted()), this, SLOT(refreshList()));
 }
@@ -184,6 +187,11 @@ void slideshareListDialog::downloadDoneSlot()
     ui->refreshButton->setEnabled(true);
     ui->uploadButton->setEnabled(true);
     QMaemo5InformationBox::information(this, "The file has finished downloading", QMaemo5InformationBox::DefaultTimeout);
+}
+
+void slideshareListDialog::setOpenDoc(const QString & openDocPath)
+{
+    this->openDocPath = openDocPath;
 }
 
 bool slideshareListDialog::eventFilter(QObject *obj, QEvent *event)

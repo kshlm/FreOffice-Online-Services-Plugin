@@ -32,6 +32,7 @@ class googleUploadDialog : public QDialog
 public:
     googleUploadDialog(GoogleDocumentService *service, QWidget *parent = 0);
     ~googleUploadDialog();
+    void setOpenDoc(const QString &);
 
 protected:
     void changeEvent(QEvent *);

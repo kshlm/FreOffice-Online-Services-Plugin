@@ -161,6 +161,9 @@ void googleListDialog::downloadButtonClickedSlot()
 void googleListDialog::uploadButtonClickedSlot()
 {
     googleUploadDialog *ud = new googleUploadDialog(service, this);
+    if("" != openDocPath) {
+        ud->setOpenDoc(openDocPath);
+    }
     ud->show();
     connect(ud, SIGNAL(accepted()), this, SLOT(refreshList()));
 }
@@ -183,4 +186,9 @@ void googleListDialog::updateProgressBar(qint64 bytesDone, qint64 bytesTotal)
 {
     int value = (bytesDone * 100) / bytesTotal;
     ui->downloadProgressBar->setValue(value);
+}
+
+void googleListDialog::setOpenDoc(const QString & openDocPath)
+{
+    this->openDocPath = openDocPath;
 }

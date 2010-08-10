@@ -22,6 +22,7 @@
 #include "googledocumentservice.h"
 
 #include <QFileDialog>
+#include <QDesktopServices>
 #include <QMaemo5InformationBox>
 
 googleUploadDialog::googleUploadDialog(GoogleDocumentService *service, QWidget *parent):
@@ -46,6 +47,11 @@ googleUploadDialog::~googleUploadDialog()
     delete ui;
 }
 
+void googleUploadDialog::setOpenDoc(const QString & openDocPath)
+{
+    ui->fileSelectEdit->setText(openDocPath);
+}
+
 void googleUploadDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
@@ -66,9 +72,11 @@ void googleUploadDialog::uploadProgressSlot(qint64 bytesSent, qint64 bytesTotal)
 
 void googleUploadDialog::showFileDialog()
 {
+    QString currentFile = ("" == ui->fileSelectEdit->text())?QDesktopServices::DataLocation(QDesktopServices::DocumentsLocation): ui->fileSelectEdit->text();
     QString filter = "Supported Files (*.odt *.doc *.ppt *.xls)";
-    QString filename = QFileDialog::getOpenFileName(this,QString("Select File"),tr(""),filter, &filter);
-    ui->fileSelectEdit->setText(filename);
+    QString filename = QFileDialog::getOpenFileName(this,QString("Select File"), currentFile,filter, &filter);
+    if("" != filename)
+        ui->fileSelectEdit->setText(filename);
 }
 
 void googleUploadDialog::uploadButtonClickedSlot()

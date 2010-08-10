@@ -31,7 +31,7 @@ class googleListDialog : public QDialog
     Q_OBJECT
 public:
     googleListDialog(GoogleDocumentService *service, QWidget *parent = 0);
-
+    void setOpenDoc(const QString &);
 protected:
     void changeEvent(QEvent *e);
 
@@ -46,6 +46,7 @@ private slots:
 private:
     Ui::fileListDialog *ui;
     GoogleDocumentService *service;
+    QString openDocPath;
 };
 
 #endif // GOOGLELISTDIALOG_H
