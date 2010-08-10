@@ -22,8 +22,9 @@
 #include <QDialog>
 #include <googledocumentservice.h>
 
-namespace Ui {
-    class fileListDialog;
+namespace Ui
+{
+class fileListDialog;
 }
 
 class googleListDialog : public QDialog

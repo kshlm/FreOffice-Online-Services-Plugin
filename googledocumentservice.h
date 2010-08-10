@@ -41,8 +41,10 @@ public:
     void listDocuments();
     void prepareLists();
     void uploadDocument(QString *filename, QString *title);
-    void downloadDocument (GoogleDocument *, QString *saveFileName);
-    bool alreadyAuthenticated() { return loggedin; }
+    void downloadDocument(GoogleDocument *, QString *saveFileName);
+    bool alreadyAuthenticated() {
+        return loggedin;
+    }
 
     QList<GoogleDocument *> documentList;
     QList<GoogleDocument *> presentationList;

@@ -35,19 +35,19 @@
 #include "slideshareDocument.h"
 #include "mimetypes.h"
 
-SlideShare::SlideShare(QObject *parent):QObject(parent)
+SlideShare::SlideShare(QObject *parent): QObject(parent)
 {
     manager.setCookieJar(&this->cookieJar);
     doc = new SlideShareDocument;
 }
 
-SlideShare::SlideShare(QString *username, QString *password, QObject *parent):QObject(parent)
+SlideShare::SlideShare(QString *username, QString *password, QObject *parent): QObject(parent)
 {
     this->username = username;
     this->password = password;
     SlideShare();
 }
-SlideShare::SlideShare(QString *username, QString *password, QString *apiKey, QString *secretKey, QObject *parent):QObject(parent)
+SlideShare::SlideShare(QString *username, QString *password, QString *apiKey, QString *secretKey, QObject *parent): QObject(parent)
 {
     this->apiKey = apiKey;
     this->secretKey = secretKey;
@@ -121,19 +121,17 @@ void SlideShare::login()
     request.setUrl(*login);
 
     reply = manager.post(request, data);
-    connect(reply,SIGNAL(finished()), this, SLOT(afterLogin()));
+    connect(reply, SIGNAL(finished()), this, SLOT(afterLogin()));
 }
 
 
 void SlideShare::afterLogin()
 {
     qDebug() << ">>>>>>>>> SlideShare::afterLogin()";
-    if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 302)
-    {
+    if(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 302) {
         if(QString("http://www.slideshare.net/").append(username) == reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString())
             emit loginDone(true);
-    }
-    else
+    } else
         emit loginDone(false);
 }
 
@@ -146,26 +144,23 @@ void SlideShare::download(QString *durl)
 
     QList<QNetworkCookie> list = cookieJar.cookiesForUrl(QUrl("http://www.slideshare.net/"));
 
-    foreach(QNetworkCookie c, list)
-    {
-        if(c.name() == "_cookie_id")
-        {
+    foreach(QNetworkCookie c, list) {
+        if(c.name() == "_cookie_id") {
             request.setHeader(QNetworkRequest::CookieHeader, QVariant::fromValue(list));
         }
     }
 
     reply = manager.get(request);
-    connect(reply,SIGNAL(finished()),this,SLOT(saveFile()));
+    connect(reply, SIGNAL(finished()), this, SLOT(saveFile()));
 
 }
 void SlideShare::saveFile()
 {
     qDebug() << ">>>>>>>>> SlideShare::saveFile()";
-    if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 302)
-    {
+    if(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 302) {
         reply = manager.get(QNetworkRequest(reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl()));
-        connect(reply,SIGNAL(downloadProgress(qint64,qint64)), this, SIGNAL(downloadProgress(qint64,qint64)));
-        connect(reply,SIGNAL(finished()), this, SLOT(saveFile()));
+        connect(reply, SIGNAL(downloadProgress(qint64, qint64)), this, SIGNAL(downloadProgress(qint64, qint64)));
+        connect(reply, SIGNAL(finished()), this, SLOT(saveFile()));
         return;
     }
 
@@ -189,7 +184,7 @@ void SlideShare::upload()
     QByteArray data = this->secretKey->toAscii();
     data += ts;
 
-    QFile *file = new QFile(*this->sourceFilename,this);
+    QFile *file = new QFile(*this->sourceFilename, this);
     file->open(QFile::ReadOnly);
 
     QByteArray fileData ;
@@ -207,14 +202,14 @@ void SlideShare::upload()
 
 
     QList<QPair<QString, QString> > params;
-    params.append(qMakePair(QString("api_key"),*this->apiKey));
-    params.append(qMakePair(QString("ts"),ts));
-    params.append(qMakePair(QString("hash"),QString(QCryptographicHash::hash(data, QCryptographicHash::Sha1).toHex())));
-    params.append(qMakePair(QString("username"),*this->username));
-    params.append(qMakePair(QString("password"),*this->password));
-    params.append(qMakePair(QString("slideshow_title"),doc->title));
-    if (doc->description != "")
-        params.append(qMakePair(QString("slideshow_description"), doc->description ));
+    params.append(qMakePair(QString("api_key"), *this->apiKey));
+    params.append(qMakePair(QString("ts"), ts));
+    params.append(qMakePair(QString("hash"), QString(QCryptographicHash::hash(data, QCryptographicHash::Sha1).toHex())));
+    params.append(qMakePair(QString("username"), *this->username));
+    params.append(qMakePair(QString("password"), *this->password));
+    params.append(qMakePair(QString("slideshow_title"), doc->title));
+    if(doc->description != "")
+        params.append(qMakePair(QString("slideshow_description"), doc->description));
     if(doc->tags != "")
         params.append(qMakePair(QString("slideshow_tags"), doc->tags));
 
@@ -227,7 +222,7 @@ void SlideShare::upload()
 
 
     QNetworkReply *reply = manager.post(request, postData);
-    connect(reply, SIGNAL(uploadProgress(qint64,qint64)), this, SIGNAL(uploadProgress(qint64,qint64)));
+    connect(reply, SIGNAL(uploadProgress(qint64, qint64)), this, SIGNAL(uploadProgress(qint64, qint64)));
     connect(reply, SIGNAL(finished()), this, SIGNAL(uploadDone()));
 }
 
@@ -242,12 +237,12 @@ void SlideShare::listDocuments()
     data += ts;
 
     QList<QPair<QString, QString> > params;
-    params.append(qMakePair(QString("api_key"),*this->apiKey));
-    params.append(qMakePair(QString("ts"),ts));
-    params.append(qMakePair(QString("hash"),QString(QCryptographicHash::hash(data, QCryptographicHash::Sha1).toHex())));
-    params.append(qMakePair(QString("username"),*this->username));
-    params.append(qMakePair(QString("password"),*this->password));
-    params.append(qMakePair(QString("username_for"),*this->username));
+    params.append(qMakePair(QString("api_key"), *this->apiKey));
+    params.append(qMakePair(QString("ts"), ts));
+    params.append(qMakePair(QString("hash"), QString(QCryptographicHash::hash(data, QCryptographicHash::Sha1).toHex())));
+    params.append(qMakePair(QString("username"), *this->username));
+    params.append(qMakePair(QString("password"), *this->password));
+    params.append(qMakePair(QString("username_for"), *this->username));
 
 
     QUrl url("http://www.slideshare.net/api/2/get_slideshows_by_user");
@@ -258,7 +253,7 @@ void SlideShare::listDocuments()
     request.setUrl(url);
 
     reply = manager.get(request);
-    connect(reply,SIGNAL(finished()), this, SLOT(parseList()));
+    connect(reply, SIGNAL(finished()), this, SLOT(parseList()));
 }
 void SlideShare::parseList()
 {
@@ -274,8 +269,7 @@ void SlideShare::parseList()
     presentationList.clear();
     spreadsheetList.clear();
 
-    while(!child.isNull())
-    {
+    while(!child.isNull()) {
         SlideShareDocument *p = new SlideShareDocument;
         p->title = child.firstChildElement("Title").text();
         p->url = child.firstChildElement("URL").text();
@@ -285,13 +279,12 @@ void SlideShare::parseList()
         p->thumbnailSmall = child.firstChildElement("ThumbnailSmallURL").text();
         p->downloadUrl = p->url.append("/download");
         QString download = child.firstChildElement("Download").text();
-        if(download == "1")
-        {
-            if (p->format == "odt" || p->format == "doc")
+        if(download == "1") {
+            if(p->format == "odt" || p->format == "doc")
                 this->textDocList.append(*p);
-            if (p->format == "odp" || p->format == "ppt")
+            if(p->format == "odp" || p->format == "ppt")
                 this->presentationList.append(*p);
-            if (p->format == "ods" || p->format == "xls")
+            if(p->format == "ods" || p->format == "xls")
                 this->spreadsheetList.append(*p);
         }
 

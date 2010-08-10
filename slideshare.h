@@ -35,7 +35,7 @@ class SlideShare : public QObject
 
 public:
     SlideShare(QObject *parent = 0);
-    SlideShare(QString *username, QString *password, QObject *parent = 0 );
+    SlideShare(QString *username, QString *password, QObject *parent = 0);
     SlideShare(QString *username, QString *password, QString *apiKey, QString *secretKey, QObject *parent);
     ~SlideShare();
 

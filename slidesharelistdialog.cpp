@@ -30,8 +30,8 @@
 #include <QMaemo5InformationBox>
 
 slideshareListDialog::slideshareListDialog(SlideShare *s, QWidget *parent):
-        QDialog(parent),
-        ui(new Ui::fileListDialog)
+    QDialog(parent),
+    ui(new Ui::fileListDialog)
 {
     ui->setupUi(this);
     this->setWindowTitle("SlideShare");
@@ -42,7 +42,7 @@ slideshareListDialog::slideshareListDialog(SlideShare *s, QWidget *parent):
     connect(ui->uploadButton, SIGNAL(clicked()), this, SLOT(uploadButtonClickedSlot()));
     connect(ui->downloadButton, SIGNAL(clicked()), this, SLOT(downloadButtonClickedSlot()));
     connect(ui->refreshButton, SIGNAL(clicked()), this, SLOT(refreshList()));
-    connect(service, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(updateProgressBar(qint64,qint64)));
+    connect(service, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(updateProgressBar(qint64, qint64)));
     connect(service, SIGNAL(downloadDone()), this, SLOT(downloadDoneSlot()));
     connect(service, SIGNAL(listDone()), this, SLOT(fillList()));
 
@@ -68,7 +68,7 @@ void slideshareListDialog::refreshList()
 void slideshareListDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
-    switch (e->type()) {
+    switch(e->type()) {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
         break;
@@ -81,24 +81,20 @@ void slideshareListDialog::downloadButtonClickedSlot()
 {
     QListWidget *tmp;
     QList<SlideShareDocument> list;
-    if(0 == ui->listTab->currentIndex())
-    {
+    if(0 == ui->listTab->currentIndex()) {
         tmp = ui->documentList;
         list = service->textDocList;
     }
-    if(1 == ui->listTab->currentIndex())
-    {
+    if(1 == ui->listTab->currentIndex()) {
         tmp = ui->presentationList;
         list = service->presentationList;
     }
-    if(2 == ui->listTab->currentIndex())
-    {
+    if(2 == ui->listTab->currentIndex()) {
         tmp = ui->spreadsheetList;
         list = service->spreadsheetList;
     }
 
-    if(tmp->currentRow() == -1)
-    {
+    if(tmp->currentRow() == -1) {
         QMaemo5InformationBox::information(this, "Select a file from the list to download", QMaemo5InformationBox::DefaultTimeout);
         return;
     }
@@ -108,8 +104,7 @@ void slideshareListDialog::downloadButtonClickedSlot()
 
     QString saveFileName = QFileDialog::getSaveFileName(this, "Save file", QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation).append("/").append(p.title).append(".").append(p.format), QString("(*.").append(p.format).append(")"));
     qDebug() << saveFileName << endl;
-    if("" == saveFileName)
-    {
+    if("" == saveFileName) {
         return;
     }
     service->setSaveFileName(new QString(saveFileName));
@@ -142,24 +137,21 @@ void slideshareListDialog::fillList()
     QList<SlideShareDocument>::iterator i;
 
     list = service->textDocList;
-    for(i = list.begin(); i != list.end(); ++i)
-    {
+    for(i = list.begin(); i != list.end(); ++i) {
         SlideShareDocument j = *i;
         QListWidgetItem *k = new QListWidgetItem(j.title);
         ui->documentList->addItem(k);
     }
 
     list = service->presentationList;
-    for(i = list.begin(); i != list.end(); ++i)
-    {
+    for(i = list.begin(); i != list.end(); ++i) {
         SlideShareDocument j = *i;
         QListWidgetItem *k = new QListWidgetItem(j.title);
         ui->presentationList->addItem(k);
     }
 
     list = service->spreadsheetList;
-    for(i = list.begin(); i != list.end(); ++i)
-    {
+    for(i = list.begin(); i != list.end(); ++i) {
         SlideShareDocument j = *i;
         QListWidgetItem *k = new QListWidgetItem(j.title);
         ui->spreadsheetList->addItem(k);
@@ -174,7 +166,7 @@ void slideshareListDialog::fillList()
 
 void slideshareListDialog::updateProgressBar(qint64 done, qint64 total)
 {
-    int value = (done * 100/total);
+    int value = (done * 100 / total);
     ui->downloadProgressBar->setValue((int)value);
 }
 
@@ -196,9 +188,8 @@ void slideshareListDialog::setOpenDoc(const QString & openDocPath)
 
 bool slideshareListDialog::eventFilter(QObject *obj, QEvent *event)
 {
-    if(event->type() == QEvent::ContextMenu)
-    {
-        QMouseEvent *mouseEvent = static_cast<QMouseEvent*> (event);
+    if(event->type() == QEvent::ContextMenu) {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
         QMenu *menu = new QMenu(this);
         menu->addAction(new QAction("CLICK", this));
         menu->exec(mouseEvent->globalPos());

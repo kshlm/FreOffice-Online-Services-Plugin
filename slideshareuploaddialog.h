@@ -22,14 +22,16 @@
 #include <QDialog>
 
 class SlideShare;
-namespace Ui {
-    class uploadDialog;
+namespace Ui
+{
+class uploadDialog;
 }
 
-class slideshareUploadDialog : public QDialog {
+class slideshareUploadDialog : public QDialog
+{
     Q_OBJECT
 public:
-    slideshareUploadDialog(SlideShare *service,QWidget *parent = 0);
+    slideshareUploadDialog(SlideShare *service, QWidget *parent = 0);
     ~slideshareUploadDialog();
     void setOpenDoc(const QString &);
 

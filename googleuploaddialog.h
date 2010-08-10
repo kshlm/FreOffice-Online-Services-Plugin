@@ -22,8 +22,9 @@
 #include <QDialog>
 
 class GoogleDocumentService;
-namespace Ui {
-    class uploadDialog;
+namespace Ui
+{
+class uploadDialog;
 }
 
 class googleUploadDialog : public QDialog

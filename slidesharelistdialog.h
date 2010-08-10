@@ -22,8 +22,9 @@
 #include <QDialog>
 #include "slideshare.h"
 
-namespace Ui {
-    class fileListDialog;
+namespace Ui
+{
+class fileListDialog;
 }
 
 class slideshareListDialog : public QDialog

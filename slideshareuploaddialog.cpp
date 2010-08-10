@@ -31,7 +31,7 @@ slideshareUploadDialog::slideshareUploadDialog(SlideShare *service, QWidget *par
 {
     this->service = service;
     ui->setupUi(this);
-    connect(service, SIGNAL(uploadProgress(qint64,qint64)), this, SLOT(uploadProgressSlot(qint64,qint64)));
+    connect(service, SIGNAL(uploadProgress(qint64, qint64)), this, SLOT(uploadProgressSlot(qint64, qint64)));
     connect(ui->fileSelectButton, SIGNAL(clicked()), this, SLOT(showFileDialog()));
     connect(ui->uploadButton, SIGNAL(clicked()), this, SLOT(uploadButtonClickedSlot()));
     connect(service, SIGNAL(uploadDone()), this, SLOT(uploadDoneSlot()));
@@ -50,7 +50,7 @@ void slideshareUploadDialog::SetOpenDoc(const QString & openDocPath)
 void slideshareUploadDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
-    switch (e->type()) {
+    switch(e->type()) {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
         break;
@@ -68,22 +68,19 @@ void slideshareUploadDialog::uploadProgressSlot(qint64 sent, qint64 total)
 
 void slideshareUploadDialog::showFileDialog()
 {
-    QString currentFile = ("" == ui->fileSelectEdit->text())?QDesktopServices::DataLocation(QDesktopServices::DocumentsLocation): ui->fileSelectEdit->text();
+    QString currentFile = ("" == ui->fileSelectEdit->text()) ? QDesktopServices::DataLocation(QDesktopServices::DocumentsLocation) : ui->fileSelectEdit->text();
     QString filter = "Supported Files (*.odt *.doc *.odp *.ppt *.ods *.xls)";
-    QString filename = QFileDialog::getOpenFileName(this,QString("Select File"), currentFile,filter, &filter);
+    QString filename = QFileDialog::getOpenFileName(this, QString("Select File"), currentFile, filter, &filter);
     if("" != filename)
         ui->fileSelectEdit->setText(filename);
 }
 
 void slideshareUploadDialog::uploadButtonClickedSlot()
 {
-    if(ui->fileSelectEdit->text() == "" || ui->titleEdit->text() == "")
-    {
-        QMaemo5InformationBox::information(this,"Please enter atleast filename and title");
+    if(ui->fileSelectEdit->text() == "" || ui->titleEdit->text() == "") {
+        QMaemo5InformationBox::information(this, "Please enter atleast filename and title");
         return;
-    }
-    else
-    {
+    } else {
         ui->fileSelectButton->setEnabled(false);
         ui->titleEdit->setEnabled(false);
         ui->descriptionBox->setEnabled(false);

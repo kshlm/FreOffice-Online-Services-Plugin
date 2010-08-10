@@ -36,9 +36,9 @@
 #include <X11/Xatom.h>
 
 LoginWindow::LoginWindow(QWidget *parent)
-        : QDialog(parent),
-          m_authDialog(new Ui_Dialog),
-          settings(new QSettings("freoffice","online-services-plugin", this))
+    : QDialog(parent),
+      m_authDialog(new Ui_Dialog),
+      settings(new QSettings("freoffice", "online-services-plugin", this))
 {
     m_authDialog->setupUi(this);
 
@@ -74,14 +74,13 @@ void LoginWindow::loginService()
         return;
     }
     disableWidgets();
-    if (0 == m_authDialog->comboBox->currentIndex()) {
+    if(0 == m_authDialog->comboBox->currentIndex()) {
         gdoc = new GoogleDocumentService();
         setShowProgressIndicator(true);
         gdoc->clientLogin(m_authDialog->userEdit->text(), m_authDialog->passwordEdit->text());
         connect(gdoc, SIGNAL(userAuthenticated(bool)), this, SLOT(authenticated(bool)));
     }
-    if (1 == m_authDialog->comboBox->currentIndex())
-    {
+    if(1 == m_authDialog->comboBox->currentIndex()) {
         service = new SlideShare(this);
         service->setApikey(new QString("KhSMYyiF"));
         service->setsecretKey(new QString("HDXhAC5g"));
@@ -89,16 +88,16 @@ void LoginWindow::loginService()
         service->setPassword(new QString(m_authDialog->passwordEdit->text()));
         service->login();
         setShowProgressIndicator(true);
-        connect(service,SIGNAL(loginDone(bool)), this, SLOT(slideShareLoginDoneSlot(bool)));
+        connect(service, SIGNAL(loginDone(bool)), this, SLOT(slideShareLoginDoneSlot(bool)));
     }
 }
 
 void LoginWindow::serviceSelected(int index)
 {
-    if (index == 0) {
+    if(index == 0) {
         m_authDialog->userEdit->setText("@gmail.com");
         m_authDialog->passwordEdit->clear();
-    } else if (index == 1) {
+    } else if(index == 1) {
         m_authDialog->userEdit->clear();
         m_authDialog->passwordEdit->clear();
     }
@@ -108,14 +107,13 @@ void LoginWindow::serviceSelected(int index)
 
 void LoginWindow::authenticated(bool success)
 {
-    if (success) {
+    if(success) {
 //        QString key("user/gdocs");
 //        saveDetails(key);
         googleListDialog *ld = new googleListDialog(gdoc, this);
         this->accept();;
         ld->show();
-    }
-    else {
+    } else {
         QMaemo5InformationBox::information(this, ("<p>Login Failed</p><p>Check your username & password</p>"), QMaemo5InformationBox::NoTimeout);
         enableWidgets();
     }
@@ -132,13 +130,11 @@ void LoginWindow::setShowProgressIndicator(bool visible)
 }
 
 void LoginWindow::slideShareLoginDoneSlot(bool loginStatus)
-{if(loginStatus == false)
-    {
-        QMaemo5InformationBox::information(this,"<p>Login Failed.</p><p>Check your username and password</p> ", QMaemo5InformationBox::NoTimeout);
+{
+    if(loginStatus == false) {
+        QMaemo5InformationBox::information(this, "<p>Login Failed.</p><p>Check your username and password</p> ", QMaemo5InformationBox::NoTimeout);
         enableWidgets();
-    }
-    else
-    {
+    } else {
 //        QString key("user/slideshare");
 //        saveDetails(key);
         slideshareListDialog * fi = new slideshareListDialog(service, this);
@@ -173,8 +169,7 @@ void LoginWindow::saveDetails(QString &key)
         m.insert("username", QString(m_authDialog->userEdit->text()));
         m.insert("password", QString(m_authDialog->passwordEdit->text()));
         settings->setValue(key, m);
-    }
-    else {
+    } else {
         settings->remove(key);
     }
 }
@@ -193,8 +188,7 @@ void LoginWindow::fillDetails()
         m_authDialog->userEdit->setText(m.value("username").toString());
         m_authDialog->passwordEdit->setText(m.value("password").toString());
         m_authDialog->saveCheckBox->setCheckState(Qt::Checked);
-    }
-    else
+    } else
         m_authDialog->saveCheckBox->setCheckState(Qt::Unchecked);
     return;
 }

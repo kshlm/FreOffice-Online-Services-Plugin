@@ -20,8 +20,7 @@
 #define SLIDESHAREDOCUMENT_H
 class QString;
 
-struct SlideShareDocument
-{
+struct SlideShareDocument {
     QString title;
     QString slideID;
     QString url;

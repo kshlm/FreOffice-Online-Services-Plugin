@@ -32,22 +32,22 @@ public:
     GoogleDocument();
 
     void setEtag(const QString & etag);
-    QString etag ();
+    QString etag();
 
-    void setId (const QString & id);
-    QString id ();
+    void setId(const QString & id);
+    QString id();
 
-    void setTitle (const QString & title);
-    QString title ();
+    void setTitle(const QString & title);
+    QString title();
 
-    void setAuthor (const QString & author);
-    QString author ();
+    void setAuthor(const QString & author);
+    QString author();
 
-    void setDocumentType (const QString & docType);
-    QString documentType ();
+    void setDocumentType(const QString & docType);
+    QString documentType();
 
-    void setDocumentUrl (const QString & url);
-    QString documentUrl ();
+    void setDocumentUrl(const QString & url);
+    QString documentUrl();
 
 private:
     QString m_etag;

@@ -23,57 +23,51 @@
 #include "googlecontenthandler.h"
 
 GoogleContentHandler::GoogleContentHandler()
-        : m_docList(0),
-          m_docEntry(0)
+    : m_docList(0),
+      m_docEntry(0)
 {
     m_docList = new GoogleDocumentList();
 }
 
-bool GoogleContentHandler::characters ( const QString & ch )
+bool GoogleContentHandler::characters(const QString & ch)
 {
-    if (!insideEntry) {
-        if (QString::compare(m_nodeStack.top(), "title", Qt::CaseInsensitive) == 0) {
-            if (m_nodeStack.count() == 2)
+    if(!insideEntry) {
+        if(QString::compare(m_nodeStack.top(), "title", Qt::CaseInsensitive) == 0) {
+            if(m_nodeStack.count() == 2)
                 m_docList->setTitle(ch);
-        }
-        else if (QString::compare(m_nodeStack.top(), "name", Qt::CaseInsensitive) == 0) {
-            if (m_nodeStack.count() == 3)
+        } else if(QString::compare(m_nodeStack.top(), "name", Qt::CaseInsensitive) == 0) {
+            if(m_nodeStack.count() == 3)
                 m_docList->setAuthor(ch);
-        }
-        else if (QString::compare(m_nodeStack.top(), "email", Qt::CaseInsensitive) == 0) {
-            if (m_nodeStack.count() == 3)
+        } else if(QString::compare(m_nodeStack.top(), "email", Qt::CaseInsensitive) == 0) {
+            if(m_nodeStack.count() == 3)
                 m_docList->setEmail(ch);
         }
-    }
-    else
-    {
-        if (m_docEntry == 0)
+    } else {
+        if(m_docEntry == 0)
             return true;
 
-        if (QString::compare(m_nodeStack.top(), "title", Qt::CaseInsensitive) == 0) {
-                m_docEntry->setTitle(ch);
-        }
-        else if (QString::compare(m_nodeStack.top(), "name", Qt::CaseInsensitive) == 0) {
-                m_docEntry->setAuthor(ch);
-        }
-        else if (QString::compare(m_nodeStack.top(), "resourceId", Qt::CaseInsensitive) == 0) {
+        if(QString::compare(m_nodeStack.top(), "title", Qt::CaseInsensitive) == 0) {
+            m_docEntry->setTitle(ch);
+        } else if(QString::compare(m_nodeStack.top(), "name", Qt::CaseInsensitive) == 0) {
+            m_docEntry->setAuthor(ch);
+        } else if(QString::compare(m_nodeStack.top(), "resourceId", Qt::CaseInsensitive) == 0) {
             m_docEntry->setId(ch);
         }
     }
     return true;
 }
 
-bool GoogleContentHandler::endDocument ()
+bool GoogleContentHandler::endDocument()
 {
     //qDebug() << "GoogleContentHandler::endDocument()";
     return true;
 }
 
-bool GoogleContentHandler::endElement ( const QString & namespaceURI, const QString & localName, const QString & qName )
+bool GoogleContentHandler::endElement(const QString & namespaceURI, const QString & localName, const QString & qName)
 {
     //printName(localName);
     QString element = m_nodeStack.pop();
-    if (QString::compare(element, "entry") == 0) {
+    if(QString::compare(element, "entry") == 0) {
         insideEntry = false;
         m_docList->append(m_docEntry);
         m_docEntry = 0;
@@ -81,55 +75,55 @@ bool GoogleContentHandler::endElement ( const QString & namespaceURI, const QStr
     return true;
 }
 
-bool GoogleContentHandler::endPrefixMapping ( const QString & prefix )
+bool GoogleContentHandler::endPrefixMapping(const QString & prefix)
 {
     return true;
 }
 
-QString GoogleContentHandler::errorString () const
+QString GoogleContentHandler::errorString() const
 {
     return QString();
 }
 
-bool GoogleContentHandler::ignorableWhitespace ( const QString & ch )
+bool GoogleContentHandler::ignorableWhitespace(const QString & ch)
 {
     return true;
 }
 
-bool GoogleContentHandler::processingInstruction ( const QString & target, const QString & data )
+bool GoogleContentHandler::processingInstruction(const QString & target, const QString & data)
 {
     return true;
 }
 
-void GoogleContentHandler::setDocumentLocator ( QXmlLocator * locator )
+void GoogleContentHandler::setDocumentLocator(QXmlLocator * locator)
 {
 }
 
-bool GoogleContentHandler::skippedEntity ( const QString & name )
-{
-    return true;
-}
-
-bool GoogleContentHandler::startDocument ()
+bool GoogleContentHandler::skippedEntity(const QString & name)
 {
     return true;
 }
 
-bool GoogleContentHandler::startElement ( const QString & namespaceURI, const QString & localName,
-                                          const QString & qName, const QXmlAttributes & atts )
+bool GoogleContentHandler::startDocument()
+{
+    return true;
+}
+
+bool GoogleContentHandler::startElement(const QString & namespaceURI, const QString & localName,
+                                        const QString & qName, const QXmlAttributes & atts)
 {
     m_nodeStack.push(localName);
 
-    if ((m_nodeStack.count() == 1) && (m_docList != 0)) { //Feed element
+    if((m_nodeStack.count() == 1) && (m_docList != 0)) {  //Feed element
         m_docList->setEtag(atts.value("gd:etag"));
     }
 
-    if (QString::compare(localName, "entry", Qt::CaseInsensitive) == 0 ) {
+    if(QString::compare(localName, "entry", Qt::CaseInsensitive) == 0) {
         m_docEntry = new GoogleDocument();
         m_docEntry->setEtag(atts.value("gd:etag"));
         insideEntry = true;
     }
-    if ( insideEntry && (QString::compare(localName, "content", Qt::CaseInsensitive) == 0 ) && (m_docEntry != 0)) {
+    if(insideEntry && (QString::compare(localName, "content", Qt::CaseInsensitive) == 0) && (m_docEntry != 0)) {
         m_docEntry->setDocumentUrl(atts.value("src"));
     }
 
@@ -138,7 +132,7 @@ bool GoogleContentHandler::startElement ( const QString & namespaceURI, const QS
     return true;
 }
 
-bool GoogleContentHandler::startPrefixMapping ( const QString & prefix, const QString & uri )
+bool GoogleContentHandler::startPrefixMapping(const QString & prefix, const QString & uri)
 {
     //qDebug() << "GoogleContentHandler::startPrefixMapping() " << prefix << uri;
     return true;
@@ -148,10 +142,10 @@ void GoogleContentHandler::printName(const QString & name)
 {
     int count = m_nodeStack.count();
     QString indent;
-    for (int i=0; i < count; i++)
+    for(int i = 0; i < count; i++)
         indent.append("\t");
     indent.append(name);
 
-    if (insideEntry);
+    if(insideEntry);
 //        qDebug() << indent;
 }

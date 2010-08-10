@@ -26,8 +26,8 @@
 #include <QMaemo5InformationBox>
 
 googleUploadDialog::googleUploadDialog(GoogleDocumentService *service, QWidget *parent):
-        QDialog(parent),
-        ui(new Ui::uploadDialog)
+    QDialog(parent),
+    ui(new Ui::uploadDialog)
 {
     this->service = service;
     ui->setupUi(this);
@@ -36,7 +36,7 @@ googleUploadDialog::googleUploadDialog(GoogleDocumentService *service, QWidget *
     ui->label_3->setVisible(false);
     ui->label_4->setVisible(false);
 
-    connect(service, SIGNAL(uploadProgress(qint64,qint64)), this, SLOT(uploadProgressSlot(qint64,qint64)));
+    connect(service, SIGNAL(uploadProgress(qint64, qint64)), this, SLOT(uploadProgressSlot(qint64, qint64)));
     connect(ui->fileSelectButton, SIGNAL(clicked()), this, SLOT(showFileDialog()));
     connect(ui->uploadButton, SIGNAL(clicked()), this, SLOT(uploadButtonClickedSlot()));
 }
@@ -72,22 +72,19 @@ void googleUploadDialog::uploadProgressSlot(qint64 bytesSent, qint64 bytesTotal)
 
 void googleUploadDialog::showFileDialog()
 {
-    QString currentFile = ("" == ui->fileSelectEdit->text())?QDesktopServices::DataLocation(QDesktopServices::DocumentsLocation): ui->fileSelectEdit->text();
+    QString currentFile = ("" == ui->fileSelectEdit->text()) ? QDesktopServices::DataLocation(QDesktopServices::DocumentsLocation) : ui->fileSelectEdit->text();
     QString filter = "Supported Files (*.odt *.doc *.ppt *.xls)";
-    QString filename = QFileDialog::getOpenFileName(this,QString("Select File"), currentFile,filter, &filter);
+    QString filename = QFileDialog::getOpenFileName(this, QString("Select File"), currentFile, filter, &filter);
     if("" != filename)
         ui->fileSelectEdit->setText(filename);
 }
 
 void googleUploadDialog::uploadButtonClickedSlot()
 {
-    if(ui->fileSelectEdit->text() == "" || ui->titleEdit->text() == "")
-    {
-        QMaemo5InformationBox::information(this,"Please enter both filename and title");
+    if(ui->fileSelectEdit->text() == "" || ui->titleEdit->text() == "") {
+        QMaemo5InformationBox::information(this, "Please enter both filename and title");
         return;
-    }
-    else
-    {
+    } else {
         ui->fileSelectButton->setEnabled(false);
         ui->titleEdit->setEnabled(false);
         ui->uploadButton->setEnabled(false);
@@ -99,9 +96,8 @@ void googleUploadDialog::uploadButtonClickedSlot()
 void googleUploadDialog::uploadDoneSlot(bool status)
 {
     if(!status) {
-        QMaemo5InformationBox::information(this,"\nUpload failed\n", QMaemo5InformationBox::NoTimeout);
-    }
-    else {
+        QMaemo5InformationBox::information(this, "\nUpload failed\n", QMaemo5InformationBox::NoTimeout);
+    } else {
         QMaemo5InformationBox::information(this, "Upload completed");
     }
     ui->doneButton->setEnabled(true);

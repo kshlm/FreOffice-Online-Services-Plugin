@@ -30,20 +30,22 @@ class GoogleContentHandler : public QXmlContentHandler
 public:
     GoogleContentHandler();
 
-    virtual bool characters ( const QString & ch );
-    virtual bool endDocument ();
-    virtual bool endElement ( const QString & namespaceURI, const QString & localName, const QString & qName );
-    virtual bool endPrefixMapping ( const QString & prefix );
-    virtual QString errorString () const;
-    virtual bool ignorableWhitespace ( const QString & ch );
-    virtual bool processingInstruction ( const QString & target, const QString & data );
-    virtual void setDocumentLocator ( QXmlLocator * locator );
-    virtual bool skippedEntity ( const QString & name );
-    virtual bool startDocument ();
-    virtual bool startElement ( const QString & namespaceURI, const QString & localName, const QString & qName, const QXmlAttributes & atts );
-    virtual bool startPrefixMapping ( const QString & prefix, const QString & uri );
+    virtual bool characters(const QString & ch);
+    virtual bool endDocument();
+    virtual bool endElement(const QString & namespaceURI, const QString & localName, const QString & qName);
+    virtual bool endPrefixMapping(const QString & prefix);
+    virtual QString errorString() const;
+    virtual bool ignorableWhitespace(const QString & ch);
+    virtual bool processingInstruction(const QString & target, const QString & data);
+    virtual void setDocumentLocator(QXmlLocator * locator);
+    virtual bool skippedEntity(const QString & name);
+    virtual bool startDocument();
+    virtual bool startElement(const QString & namespaceURI, const QString & localName, const QString & qName, const QXmlAttributes & atts);
+    virtual bool startPrefixMapping(const QString & prefix, const QString & uri);
 
-    GoogleDocumentList *documentList() {    return m_docList; }
+    GoogleDocumentList *documentList() {
+        return m_docList;
+    }
 
 private:
     QStack<QString> m_nodeStack;

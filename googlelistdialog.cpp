@@ -27,8 +27,8 @@
 #include <QDesktopServices>
 
 googleListDialog::googleListDialog(GoogleDocumentService *service, QWidget *parent):
-        QDialog(parent),
-        ui(new Ui::fileListDialog)
+    QDialog(parent),
+    ui(new Ui::fileListDialog)
 {
     ui->setupUi(this);
     this->setWindowTitle("Google Docs");
@@ -41,14 +41,14 @@ googleListDialog::googleListDialog(GoogleDocumentService *service, QWidget *pare
     connect(ui->refreshButton, SIGNAL(clicked()), this, SLOT(refreshList()));
     connect(service, SIGNAL(listDone(bool)), this, SLOT(fillList(bool)));
     connect(service, SIGNAL(downloadDone(bool)), this, SLOT(downloadDoneSlot(bool)));
-    connect(service, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(updateProgressBar(qint64,qint64)));
+    connect(service, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(updateProgressBar(qint64, qint64)));
     refreshList();
 }
 
 void googleListDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
-    switch (e->type()) {
+    switch(e->type()) {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
         break;
@@ -80,26 +80,25 @@ void googleListDialog::fillList(bool status)
         QList<GoogleDocument *> list;
 
         list = service->documentList;
-        foreach(GoogleDocument *i, list) {
+        foreach(GoogleDocument * i, list) {
             ui->documentList->addItem(i->title());
         }
 
         list = service->presentationList;
-        foreach(GoogleDocument *i, list) {
+        foreach(GoogleDocument * i, list) {
             ui->presentationList->addItem(i->title());
         }
 
         list = service->spreadsheetList;
-        foreach(GoogleDocument *i, list) {
+        foreach(GoogleDocument * i, list) {
             ui->spreadsheetList->addItem(i->title());
         }
 
         list = service->othersList;
-        foreach(GoogleDocument *i, list) {
+        foreach(GoogleDocument * i, list) {
             ui->othersList->addItem(i->title());
         }
-    }
-    else {
+    } else {
         QMaemo5InformationBox::information(this, "<p><b>Error</b></p> <p>An error occured while fetching document list</p>", QMaemo5InformationBox::NoTimeout);
     }
     ui->downloadProgressBar->setMaximum(100);
@@ -140,14 +139,12 @@ void googleListDialog::downloadButtonClickedSlot()
     QString format = "";
     if("presentation" == doc->documentType()) {
         format = ".ppt";
-    }
-    else if("document" == doc->documentType()) {
+    } else if("document" == doc->documentType()) {
         format = ".odt";
-    }
-    else if("spreadsheet" == doc->documentType()) {
+    } else if("spreadsheet" == doc->documentType()) {
         format = ".ods";
     }
-    QString filename = QFileDialog::getSaveFileName(this,"Save File",QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + doc->title() + format, "(*" + format + ")");
+    QString filename = QFileDialog::getSaveFileName(this, "Save File", QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + doc->title() + format, "(*" + format + ")");
     if("" == filename)
         return;
     service->downloadDocument(doc, new QString(filename));

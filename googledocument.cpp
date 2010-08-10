@@ -32,59 +32,59 @@ void GoogleDocument::setEtag(const QString & etag)
     m_etag = etag;
 }
 
-QString GoogleDocument::etag ()
+QString GoogleDocument::etag()
 {
     return m_etag;
 }
 
-void GoogleDocument::setId (const QString & id)
+void GoogleDocument::setId(const QString & id)
 {
     m_id = id;
 
     setDocumentType(id.left(id.indexOf(":")));
 }
 
-QString GoogleDocument::id ()
+QString GoogleDocument::id()
 {
     return m_id;
 }
 
-void GoogleDocument::setTitle (const QString & title)
+void GoogleDocument::setTitle(const QString & title)
 {
     m_title = title;
 }
 
-QString GoogleDocument::title ()
+QString GoogleDocument::title()
 {
     return m_title;
 }
 
-void GoogleDocument::setAuthor (const QString & author)
+void GoogleDocument::setAuthor(const QString & author)
 {
     m_author = author;
 }
 
-QString GoogleDocument::author ()
+QString GoogleDocument::author()
 {
     return m_author;
 }
 
-void GoogleDocument::setDocumentType (const QString & docType)
+void GoogleDocument::setDocumentType(const QString & docType)
 {
     m_docType = docType;
 }
 
-QString GoogleDocument::documentType ()
+QString GoogleDocument::documentType()
 {
     return m_docType;
 }
 
-void GoogleDocument::setDocumentUrl (const QString & url)
+void GoogleDocument::setDocumentUrl(const QString & url)
 {
     m_documetUrl = url;
 }
 
-QString GoogleDocument::documentUrl ()
+QString GoogleDocument::documentUrl()
 {
     return m_documetUrl;
 }
