@@ -68,7 +68,7 @@ void slideshareUploadDialog::uploadProgressSlot(qint64 sent, qint64 total)
 
 void slideshareUploadDialog::showFileDialog()
 {
-    QString currentFile = ("" == ui->fileSelectEdit->text()) ? QDesktopServices::DataLocation(QDesktopServices::DocumentsLocation) : ui->fileSelectEdit->text();
+    QString currentFile = ("" == ui->fileSelectEdit->text()) ? QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) : ui->fileSelectEdit->text();
     QString filter = "Supported Files (*.odt *.doc *.odp *.ppt *.ods *.xls)";
     QString filename = QFileDialog::getOpenFileName(this, QString("Select File"), currentFile, filter, &filter);
     if("" != filename)

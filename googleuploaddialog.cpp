@@ -72,7 +72,7 @@ void googleUploadDialog::uploadProgressSlot(qint64 bytesSent, qint64 bytesTotal)
 
 void googleUploadDialog::showFileDialog()
 {
-    QString currentFile = ("" == ui->fileSelectEdit->text()) ? QDesktopServices::DataLocation(QDesktopServices::DocumentsLocation) : ui->fileSelectEdit->text();
+    QString currentFile = ("" == ui->fileSelectEdit->text()) ? QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) : ui->fileSelectEdit->text();
     QString filter = "Supported Files (*.odt *.doc *.ppt *.xls)";
     QString filename = QFileDialog::getOpenFileName(this, QString("Select File"), currentFile, filter, &filter);
     if("" != filename)
