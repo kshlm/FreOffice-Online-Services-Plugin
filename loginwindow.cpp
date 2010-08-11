@@ -26,6 +26,7 @@
 #include "googlelistdialog.h"
 #include "slideshare.h"
 #include "slidesharelistdialog.h"
+#include "encryptsupport.h"
 
 #include <QtGui>
 #include <QX11Info>
@@ -38,7 +39,8 @@
 LoginWindow::LoginWindow(QWidget *parent)
     : QDialog(parent),
       m_authDialog(new Ui_Dialog),
-      settings(new QSettings("freoffice", "online-services-plugin", this))
+      settings(new QSettings("freoffice", "online-services-plugin", this)),
+      cipher(new encryptSupport(this))
 {
     m_authDialog->setupUi(this);
 

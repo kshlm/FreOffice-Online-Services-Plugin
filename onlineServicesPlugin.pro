@@ -13,6 +13,7 @@ DEPENDPATH += .
 INCLUDEPATH += . \
     /usr/local/include/office \
     /usr/include/office
+LIBS += -lcrypto
 
 # Input
 HEADERS += googlecontenthandler.h \
@@ -27,7 +28,8 @@ HEADERS += googlecontenthandler.h \
     slideshare.h \
     slideshareDocument.h \
     slidesharelistdialog.h \
-    slideshareuploaddialog.h
+    slideshareuploaddialog.h \
+    encryptsupport.h
 FORMS += authenticationdialog.ui \
     filelistdialog.ui \
     uploaddialog.ui
@@ -42,4 +44,5 @@ SOURCES += googlecontenthandler.cpp \
     onlineservicesplugin.cpp \
     slideshare.cpp \
     slidesharelistdialog.cpp \
-    slideshareuploaddialog.cpp
+    slideshareuploaddialog.cpp \
+    encryptsupport.cpp

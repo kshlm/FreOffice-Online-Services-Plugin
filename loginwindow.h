@@ -30,6 +30,7 @@
 
 class SlideShare;
 class GoogleDocumentService;
+class encryptSupport;
 class QSettings;
 class LoginWindow : public QDialog
 {
@@ -49,6 +50,7 @@ private slots:
 
 private:
     Ui_Dialog *m_authDialog;
+    encryptSupport *cipher;
     GoogleDocumentService *gdoc;
     SlideShare *service;
     QSettings *settings;
