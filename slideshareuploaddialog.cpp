@@ -42,7 +42,7 @@ slideshareUploadDialog::~slideshareUploadDialog()
     delete ui;
 }
 
-void slideshareUploadDialog::SetOpenDoc(const QString & openDocPath)
+void slideshareUploadDialog::setOpenDoc(const QString & openDocPath)
 {
     ui->fileSelectEdit->setText(openDocPath);
 }

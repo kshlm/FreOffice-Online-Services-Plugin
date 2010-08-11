@@ -111,6 +111,7 @@ void LoginWindow::authenticated(bool success)
 //        QString key("user/gdocs");
 //        saveDetails(key);
         googleListDialog *ld = new googleListDialog(gdoc, this);
+        ld->setOpenDoc(openDocPath);
         this->accept();;
         ld->show();
     } else {
@@ -137,9 +138,10 @@ void LoginWindow::slideShareLoginDoneSlot(bool loginStatus)
     } else {
 //        QString key("user/slideshare");
 //        saveDetails(key);
-        slideshareListDialog * fi = new slideshareListDialog(service, this);
+        slideshareListDialog * ld = new slideshareListDialog(service, this);
+        ld->setOpenDoc(openDocPath);
         this->accept();
-        fi->show();
+        ld->show();
     }
 }
 

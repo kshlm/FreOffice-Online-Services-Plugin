@@ -22,7 +22,7 @@ QWidget *onlineServicesPlugin::view()
 {
     window = new LoginWindow();
     if(doc) {
-        window->setOpenDoc(openDocPath);
+        window->setOpenDoc(doc->url().path());
     }
     return window;
 }
