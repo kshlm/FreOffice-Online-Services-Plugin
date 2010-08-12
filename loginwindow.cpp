@@ -55,7 +55,6 @@ LoginWindow::LoginWindow(QWidget *parent)
     fillDetails();
     m_authDialog->userEdit->setInputMethodHints(Qt::ImhNoAutoUppercase);
     m_authDialog->userEdit->setFocus();
-    m_authDialog->saveCheckBox->setDisabled(true);
     show();
 }
 
@@ -154,7 +153,7 @@ void LoginWindow::enableWidgets()
     m_authDialog->userEdit->setEnabled(true);
     m_authDialog->passwordEdit->setEnabled(true);
     m_authDialog->comboBox->setEnabled(true);
-//    m_authDialog->saveCheckBox->setEnabled(true);
+    m_authDialog->saveCheckBox->setEnabled(true);
 }
 
 void LoginWindow::disableWidgets()
