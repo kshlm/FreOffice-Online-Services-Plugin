@@ -1,14 +1,14 @@
 #ifndef ENCRYPTSUPPORT_H
 #define ENCRYPTSUPPORT_H
 
-#include <QObject>
+#include <QWidget>
 class QString;
 class QByteArray;
 
-class encryptSupport:public QObject
+class encryptSupport:public QWidget
 {
 public:
-    encryptSupport(QObject * parent = 0);
+    encryptSupport(QWidget * parent = 0);
     QString encrypt(const QString &);
     QString decrypt(const QString &);
 private:

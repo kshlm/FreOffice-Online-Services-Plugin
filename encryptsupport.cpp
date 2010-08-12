@@ -12,8 +12,8 @@
 
 #include  <openssl/evp.h>
 
-encryptSupport::encryptSupport(QObject *parent)
-    : QObject(parent)
+encryptSupport::encryptSupport(QWidget *parent)
+    : QWidgett(parent)
 {
     getDetails();
 }
@@ -21,11 +21,6 @@ encryptSupport::encryptSupport(QObject *parent)
 void encryptSupport::getDetails()
 {
     QSettings passphraseConf("freoffice", "pluginEncryptionSupport");
-    if(!passphraseConf.contains("hash")) {
-        newPassphraseDialog();
-        return;
-    }
-    QString hash = passphraseHash.value("hash").toString();
     QSettings passphraseTemp("/tmp/freoffice-encryption-support-temp.conf");
     if (!passphraseTemp.contains("key")) {
         enterPassphraseDialog();
@@ -48,7 +43,7 @@ void encryptSupport::enterPassphraseDialog()
         passphrase = QInputDialog::getText(this,"Enter Passphrase", "Enter the passphrase you used to encrypt.\n This will be done once every session only", QLineEdit::Normal,"");
         if(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() == QByteArray::fromHex(hash.toUtf8()))
             break;
-        QMaemo5InfomationBox::information(this, "Wrong passphrase.\nEnter again.", QMaemo5InformationBox::NoTimeout);
+        QMaemo5InformationBox::information(this, "Wrong passphrase.\nEnter again.", QMaemo5InformationBox::NoTimeout);
     }
     QSettings passphraseTemp("/tmp/freoffice-encryption-support-temp.conf");
     passphraseTemp.setValue("key", passphrase);
@@ -89,8 +84,7 @@ QString encryptSupport::encrypt(const QString & dataString)
     EVP_EncryptFinal_ex(&ctx, outbuf+len, &tmplen);
     outlen += tmplen;
     EVP_CIPHER_CTX_cleanup(&ctx);
-    QByteArray encData(outbuf, outlen);
-    delete outbuf;
+    QByteArray encData((const char*)outbuf, outlen);
     return QString(encData.toHex());
 }
 
@@ -107,7 +101,6 @@ QString encryptSupport::decrypt(const QString &dataString)
     EVP_DecryptFinal_ex(&ctx, outbuf+outlen, &tmplen);
     outlen += tmplen;
     EVP_CIPHER_CTX_cleanup(&ctx);
-    QByteArray decData(outbuf, outlen);
-    delete outbuf;
+    QByteArray decData((const char*)outbuf, outlen);
     return QString(decData);
 }
