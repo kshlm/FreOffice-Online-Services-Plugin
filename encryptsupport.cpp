@@ -12,16 +12,17 @@
 
 #include  <openssl/evp.h>
 
-encryptSupport::encryptSupport(QWidget *parent)
-    : QWidget(parent)
+encryptSupport::encryptSupport(QWidget *parent):
+        QWidget(parent)
 {
+    QSettings::setPath(QSettings::NativeFormat, QSettings::SystemScope, "/tmp/");
     getDetails();
 }
 
 void encryptSupport::getDetails()
 {
-    QSettings passphraseConf("freoffice", "pluginEncryptionSupport");
-    QSettings passphraseTemp("/tmp/freoffice-encryption-support-temp.conf");
+    QSettings passphraseConf("freoffice", "plugin-encryption-support");
+    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");
     if (!passphraseTemp.contains("key")) {
         enterPassphraseDialog();
         return;
@@ -41,11 +42,11 @@ void encryptSupport::enterPassphraseDialog()
     QString passphrase;
     while(true) {
         passphrase = QInputDialog::getText(this,"Enter Passphrase", "Enter the passphrase you used to encrypt.\n This will be done once every session only", QLineEdit::Normal,"");
-        if(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() == QByteArray::fromHex(hash.toUtf8()))
+        if(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() == hash.toUtf8())
             break;
         QMaemo5InformationBox::information(this, "Wrong passphrase.\nEnter again.", QMaemo5InformationBox::NoTimeout);
     }
-    QSettings passphraseTemp("/tmp/freoffice-encryption-support-temp.conf");
+    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");
     passphraseTemp.setValue("key", passphrase);
     passphraseTemp.sync();
     getDetails();
@@ -55,7 +56,7 @@ void encryptSupport::newPassphraseDialog()
 {
     QString passphrase;
     while("" == passphrase) {
-        passphrase = QInputDialog::getText(this,"New Passphrase", "Please enter a phrase which is at least 4 characters long.The longer the better.\nThis phrase will be used to encrypt your passwords and details", QLineEdit::Normal,"");
+        passphrase = QInputDialog::getText(this,"New Passphrase", "Please enter a phrase which is long.\nThis phrase will be used to encrypt your passwords and details", QLineEdit::Normal,"");
     }
     QSettings passphraseConf("freoffice","plugin-encryption-support");
     QString hash(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex());
@@ -66,9 +67,10 @@ void encryptSupport::newPassphraseDialog()
     f.close();
     passphraseConf.setValue("iv", ivInit);
     passphraseConf.sync();
-    QSettings passphraseTemp("/tmp/freoffice-encryption-support-temp.conf");
+    QSettings passphraseTemp(QSettings::SystemScope,"freoffice-encryption-support-temp.conf");
     passphraseTemp.setValue("key", passphrase);
     passphraseTemp.sync();
+    getDetails();
 }
 
 QString encryptSupport::encrypt(const QString & dataString)
@@ -76,7 +78,7 @@ QString encryptSupport::encrypt(const QString & dataString)
     QByteArray data = dataString.toUtf8();
     EVP_CIPHER_CTX ctx;
     EVP_CIPHER_CTX_init(&ctx);
-    EVP_EncryptInit_ex(&ctx, EVP_bf_cbc(), NULL, (unsigned char*)key.constData(), (unsigned char*)iv.constData());
+    EVP_EncryptInit(&ctx, EVP_bf_cbc(), (unsigned char*)key.constData(), (unsigned char*)iv.constData());
     unsigned char outbuf[1024];
     int len = data.length();
     int outlen, tmplen;
@@ -93,13 +95,12 @@ QString encryptSupport::decrypt(const QString &dataString)
     QByteArray data = QByteArray::fromHex(dataString.toUtf8());
     EVP_CIPHER_CTX ctx;
     EVP_CIPHER_CTX_init(&ctx);
-    EVP_DecryptInit_ex(&ctx, EVP_bf_cbc(), NULL, (unsigned char*)key.constData(), (unsigned char*)iv.constData());
+    EVP_DecryptInit(&ctx, EVP_bf_cbc(), (unsigned char*)key.constData(), (unsigned char*)iv.constData());
     unsigned char outbuf[1024];
     int len = data.length();
     int outlen, tmplen;
     EVP_DecryptUpdate(&ctx, outbuf, &outlen, (unsigned char*)data.constData(), len);
-    EVP_DecryptFinal_ex(&ctx, outbuf+outlen, &tmplen);
-    outlen += tmplen;
+    EVP_DecryptFinal(&ctx, outbuf+outlen, &tmplen);
     EVP_CIPHER_CTX_cleanup(&ctx);
     QByteArray decData((const char*)outbuf, outlen);
     return QString(decData);
