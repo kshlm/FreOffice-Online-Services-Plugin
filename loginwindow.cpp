@@ -103,15 +103,15 @@ void LoginWindow::serviceSelected(int index)
         m_authDialog->userEdit->clear();
         m_authDialog->passwordEdit->clear();
     }
-//    fillDetails();
+    fillDetails();
     m_authDialog->userEdit->setFocus();
 }
 
 void LoginWindow::authenticated(bool success)
 {
     if(success) {
-//        QString key("user/gdocs");
-//        saveDetails(key);
+        QString key("user/gdocs");
+        saveDetails(key);
         googleListDialog *ld = new googleListDialog(gdoc, this);
         ld->setOpenDoc(openDocPath);
         this->accept();;
@@ -138,8 +138,8 @@ void LoginWindow::slideShareLoginDoneSlot(bool loginStatus)
         QMaemo5InformationBox::information(this, "<p>Login Failed.</p><p>Check your username and password</p> ", QMaemo5InformationBox::NoTimeout);
         enableWidgets();
     } else {
-//        QString key("user/slideshare");
-//        saveDetails(key);
+        QString key("user/slideshare");
+        saveDetails(key);
         slideshareListDialog * ld = new slideshareListDialog(service, this);
         ld->setOpenDoc(openDocPath);
         this->accept();
@@ -163,15 +163,17 @@ void LoginWindow::disableWidgets()
     m_authDialog->userEdit->setEnabled(false);
     m_authDialog->passwordEdit->setEnabled(false);
     m_authDialog->comboBox->setEnabled(false);
-//    m_authDialog->saveCheckBox->setEnabled(false);
+    m_authDialog->saveCheckBox->setEnabled(false);
 }
 
 void LoginWindow::saveDetails(QString &key)
 {
     if(Qt::Checked == m_authDialog->saveCheckBox->checkState()) {
         QVariantMap m;
-        m.insert("username", QString(m_authDialog->userEdit->text()));
-        m.insert("password", QString(m_authDialog->passwordEdit->text()));
+        QString username = m_authDialog->userEdit->text();
+        QString password = m_authDialog->passwordEdit->text();
+        m.insert("username", username);
+        m.insert("password", cipher->encrypt(password));
         settings->setValue(key, m);
     } else {
         settings->remove(key);
@@ -189,8 +191,11 @@ void LoginWindow::fillDetails()
         return;
     if(settings->contains(key)) {
         QVariantMap m = settings->value(key).value<QVariantMap>();
-        m_authDialog->userEdit->setText(m.value("username").toString());
-        m_authDialog->passwordEdit->setText(m.value("password").toString());
+        QString username = m.value("username").toString();
+        QString password = m.value("password").toString();
+        qDebug() << password;
+        m_authDialog->userEdit->setText(username);
+        m_authDialog->passwordEdit->setText(cipher->decrypt(password));
         m_authDialog->saveCheckBox->setCheckState(Qt::Checked);
     } else
         m_authDialog->saveCheckBox->setCheckState(Qt::Unchecked);

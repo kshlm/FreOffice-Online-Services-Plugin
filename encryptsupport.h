@@ -9,8 +9,8 @@ class encryptSupport:public QObject
 {
 public:
     encryptSupport(QObject * parent = 0);
-    QByteArray encrypt(const QString &);
-    QByteArray decrypt(const QString &);
+    QString encrypt(const QString &);
+    QString decrypt(const QString &);
 private:
     QByteArray key;
     QByteArray iv;
