@@ -192,7 +192,6 @@ void LoginWindow::fillDetails()
         QVariantMap m = settings->value(key).value<QVariantMap>();
         QString username = m.value("username").toString();
         QString password = m.value("password").toString();
-        qDebug() << password;
         m_authDialog->userEdit->setText(username);
         m_authDialog->passwordEdit->setText(cipher->decrypt(password));
         m_authDialog->saveCheckBox->setCheckState(Qt::Checked);

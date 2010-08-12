@@ -13,7 +13,7 @@
 #include  <openssl/evp.h>
 
 encryptSupport::encryptSupport(QWidget *parent)
-    : QWidgett(parent)
+    : QWidget(parent)
 {
     getDetails();
 }

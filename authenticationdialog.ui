@@ -76,6 +76,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QCheckBox" name="saveCheckBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>Save Details</string>
        </property>
