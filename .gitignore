@@ -3,3 +3,6 @@ moc_*
 ui_*
 Makefile
 *.pro.*
+*.o
+*.so
+OfficeInterface.h
