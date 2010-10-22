@@ -54,6 +54,7 @@ void GoogleDocumentService::clientLogin(const QString & username, const QString 
     } else {
         data.append(QString("&service=wise&source=KOfficev2").toUtf8());
     }
+    data.append(QString("&accountType=HOSTED_OR_GOOGLE").toUtf8());
     QNetworkRequest req(QUrl("https://www.google.com/accounts/ClientLogin"));
     req.setRawHeader("Host", "www.google.com");
     req.setRawHeader("GData-Version", "3.0");
