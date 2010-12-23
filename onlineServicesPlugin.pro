@@ -29,7 +29,8 @@ HEADERS += googlecontenthandler.h \
     slideshareDocument.h \
     slidesharelistdialog.h \
     slideshareuploaddialog.h \
-    encryptsupport.h
+    encryptsupport.h \
+    passphrasedialog.h
 FORMS += authenticationdialog.ui \
     filelistdialog.ui \
     uploaddialog.ui
@@ -45,4 +46,5 @@ SOURCES += googlecontenthandler.cpp \
     slideshare.cpp \
     slidesharelistdialog.cpp \
     slideshareuploaddialog.cpp \
-    encryptsupport.cpp
+    encryptsupport.cpp \
+    passphrasedialog.cpp

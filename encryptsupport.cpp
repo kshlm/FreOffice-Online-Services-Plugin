@@ -17,6 +17,7 @@
  */
 
 #include "encryptsupport.h"
+#include "passphrasedialog.h"
 
 #include <QString>
 #include <QByteArray>
@@ -26,6 +27,7 @@
 #include <QLabel>
 #include <QCryptographicHash>
 #include <QFile>
+#include <QMessageBox>
 #include <QMaemo5InformationBox>
 
 #include  <openssl/evp.h>
@@ -59,10 +61,20 @@ void encryptSupport::enterPassphraseDialog()
     QString hash = passphraseConf.value("hash").toString();
     QString passphrase;
     while(true) {
-        passphrase = QInputDialog::getText(this,"Enter Passphrase", "Enter the passphrase you used to encrypt.\n This will be done once every session only", QLineEdit::Normal,"");
-        if(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() == hash.toUtf8())
-            break;
-        QMaemo5InformationBox::information(this, "Wrong passphrase.\nEnter again.", QMaemo5InformationBox::NoTimeout);
+        int val = 0;
+//        passphrase = QInputDialog::getText(this,"Enter Passphrase", "Enter the passphrase you used to encrypt.\n This will be done once every session only", QLineEdit::Normal,"");
+        passphrase = passphraseDialog::getPassphrase(val, this);
+        if(val == 1) {
+            QMaemo5InformationBox::information(this,"All saved deatils will be lost", QMaemo5InformationBox::NoTimeout);
+            deleteSaved();
+            newPassphraseDialog();
+            return;
+        }
+        else if (val == 0) {
+            if(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() == hash.toUtf8())
+                break;
+            QMaemo5InformationBox::information(this, "Wrong passphrase.\nEnter again.", QMaemo5InformationBox::NoTimeout);
+        }
     }
     QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");
     passphraseTemp.setValue("key", passphrase);
