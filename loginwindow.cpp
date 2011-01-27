@@ -39,11 +39,11 @@
 LoginWindow::LoginWindow(QWidget *parent)
     : QDialog(parent),
       m_authDialog(new Ui_Dialog),
-      settings(new QSettings("freoffice", "online-services-plugin", this)),
+      settings(new QSettings("freoffice", "plugin-settings", this)),
       cipher(new encryptSupport(this))
 {
     m_authDialog->setupUi(this);
-
+    settings->beginGroup("online-services-plugin");
     QStringList onlineServices;
     onlineServices << "Google Documents";
     // Add services here
@@ -113,7 +113,7 @@ void LoginWindow::authenticated(bool success)
         saveDetails(key);
         googleListDialog *ld = new googleListDialog(gdoc, this);
         ld->setOpenDoc(openDocPath);
-        this->accept();;
+        this->accept();
         ld->show();
     } else {
         QMaemo5InformationBox::information(this, ("<p>Login Failed</p><p>Check your username & password</p>"), QMaemo5InformationBox::NoTimeout);
@@ -177,6 +177,7 @@ void LoginWindow::saveDetails(QString &key)
     } else {
         settings->remove(key);
     }
+    settings->sync();
 }
 
 void LoginWindow::fillDetails()

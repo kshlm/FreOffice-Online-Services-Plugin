@@ -41,7 +41,8 @@ encryptSupport::encryptSupport(QWidget *parent):
 
 void encryptSupport::getDetails()
 {
-    QSettings passphraseConf("freoffice", "plugin-encryption-support");
+    QSettings passphraseConf("freoffice", "plugin-settings");
+    passphraseConf.beginGroup("encrypt-support");
     QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");
     if (!passphraseTemp.contains("key")) {
         enterPassphraseDialog();
@@ -53,7 +54,8 @@ void encryptSupport::getDetails()
 
 void encryptSupport::enterPassphraseDialog()
 {
-    QSettings passphraseConf("freoffice", "plugin-encryption-support");
+    QSettings passphraseConf("freoffice", "plugin-settings");
+    passphraseConf.beginGroup("encryption-support");
     if(!passphraseConf.contains("hash")) {
         newPassphraseDialog();
         return;
@@ -65,7 +67,7 @@ void encryptSupport::enterPassphraseDialog()
 //        passphrase = QInputDialog::getText(this,"Enter Passphrase", "Enter the passphrase you used to encrypt.\n This will be done once every session only", QLineEdit::Normal,"");
         passphrase = passphraseDialog::getPassphrase(val, this);
         if(val == 1) {
-            QMaemo5InformationBox::information(this,"All saved deatils will be lost", QMaemo5InformationBox::NoTimeout);
+            QMaemo5InformationBox::information(this,"All saved details will be lost", QMaemo5InformationBox::NoTimeout);
             deleteSaved();
             newPassphraseDialog();
             return;
@@ -82,13 +84,24 @@ void encryptSupport::enterPassphraseDialog()
     getDetails();
 }
 
+void encryptSupport::deleteSettings() {
+    QSettings passphraseConf("freoffice", "plugin-settings");
+    passphraseConf.clear();
+    passphraseConf.sync();
+
+    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");
+    passphraseTemp.clear();
+    passphraseTemp.sync();
+}
+
 void encryptSupport::newPassphraseDialog()
 {
     QString passphrase;
     while("" == passphrase) {
         passphrase = QInputDialog::getText(this,"New Passphrase", "Please enter a phrase which is long.\nThis phrase will be used to encrypt your passwords and details", QLineEdit::Normal,"");
     }
-    QSettings passphraseConf("freoffice","plugin-encryption-support");
+    QSettings passphraseConf("freoffice","plugin-settings");
+    passphraseConf.beginGroup("encrypt-support");
     QString hash(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex());
     passphraseConf.setValue("hash",hash);
     QFile f("/dev/urandom");

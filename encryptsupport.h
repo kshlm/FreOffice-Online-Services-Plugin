@@ -36,6 +36,7 @@ private:
     void getDetails();
     void newPassphraseDialog();
     void enterPassphraseDialog();
+    void deleteSettings();
 };
 
 #endif // ENCRYPTSUPPORT_H
