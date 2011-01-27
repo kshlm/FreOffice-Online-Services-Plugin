@@ -3,14 +3,22 @@
 
 #include <QDialog>
 
-class passphraseDialogPrivate;
 class passphraseDialog : public QDialog
 {
     Q_OBJECT
-    Q_DECLARE_PRIVATE(passphraseDialogPrivate)
 public:
     explicit passphraseDialog(QWidget *parent = 0);
     static QString getPassphrase(int &val, QWidget *parent = 0);
+
+private:
+    bool okClicked;
+    bool changeClicked;
+
+    void init();
+
+private slots:
+    void okClickedSlot();
+    void changeClickedSlot();
 };
 
 #endif // PASSPHRASEDIALOG_H

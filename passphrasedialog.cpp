@@ -6,71 +6,46 @@
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 
-class passphraseDialogPrivate: public QDialogPrivate {
-    Q_OBJECT
-    Q_DECLARE_PUBLIC(passphraseDialog)
-public:
-    passphraseDialogPrivate();
-    QLineEdit *linedit;
-    QPushButton *okButton;
-    QPushButton *changeButton;
-
-    bool change;
-
-    void init();
-
-private slots:
-    void changeButtonClicked();
-};
-
-passphraseDialogPrivate::passphraseDialogPrivate()
-    : QDialogPrivate(),
-    change(false) {
-
+passphraseDialog::passphraseDialog(QWidget *parent):
+        QDialog(parent),
+        changeClicked(false) {
+    init();
 }
 
-void passphraseDialogPrivate::init() {
-    Q_Q(passphraseDialog);
-    QVBoxLayout *layout = new QVBoxLayout(q);
+void passphraseDialog::init() {
+    QVBoxLayout *layout = new QVBoxLayout(this);
 
-    QLabel *label = new QLabel("Enter the passphrase", q);
+    QLabel *label = new QLabel("Enter the passphrase", this);
     layout->addWidget(label);
 
-    linedit = new QLineEdit(q);
+    linedit = new QLineEdit(this);
     linedit->setEchoMode(QLineEdit::Password);
     layout->addWidget(linedit);
 
-    okButton = new QPushButton("Ok",q);
-    changeButton = new QPushButton("Change Passphrase", q);
+    okButton = new QPushButton("Ok",this);
+    changeButton = new QPushButton("Change Passphrase", this);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(Qt::Horizontal, q);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
     buttonBox->addButton(changeButton, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(okButton, QDialogButtonBox::AcceptRole);
     okButton->setDefault(true);
     layout->addWidget(buttonBox);
-    connect(buttonBox, SIGNAL(accepted()), q, SLOT(accept()));
-    connect(changeButton, SIGNAL(clicked()), this, SLOT(changeButtonClicked()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(changeButton, SIGNAL(clicked()), this, SLOT(changeClickedSlot()));
 }
 
-void passphraseDialogPrivate::changeButtonClicked() {
-    change = true;
-}
-
-passphraseDialog::passphraseDialog(QWidget *parent) :
-    QDialog(*new passphraseDialogPrivate, parent)
-{
-    Q_D(passphraseDialog);
-    d->init();
+void passphraseDialog::changeClickedSlot() {
+    this->changeClicked = true;
 }
 
 QString passphraseDialog::getPassphrase(int &val, QWidget *parent) {
     passphraseDialog dialog(parent);
 
-    QString passphrase;
+    QString passphrase = "";
     bool accepted = (dialog.exec() == QDialog::Accepted);
 
     if(accepted) {
-        if(dialog.d_func()->change) {
+        if(this->changeClicked) {
             val = 1;
         }
         else {
