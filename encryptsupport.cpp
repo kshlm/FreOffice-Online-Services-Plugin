@@ -19,6 +19,7 @@
 #include "encryptsupport.h"
 #include "passphrasedialog.h"
 
+#include <QDebug>
 #include <QString>
 #include <QByteArray>
 #include <QSettings>
