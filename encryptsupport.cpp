@@ -44,7 +44,7 @@ void encryptSupport::getDetails()
 {
     QSettings passphraseConf("freoffice", "plugin-settings");
     passphraseConf.beginGroup("encrypt-support");
-    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");
+    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp");
     if (!passphraseTemp.contains("key")) {
         enterPassphraseDialog();
         return;
@@ -87,7 +87,7 @@ void encryptSupport::enterPassphraseDialog()
             return;
         }
     }
-    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");
+    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp");
     passphraseTemp.setValue("key", passphrase);
     passphraseTemp.sync();
     getDetails();
@@ -98,7 +98,7 @@ void encryptSupport::deleteSettings() {
     passphraseConf.clear();
     passphraseConf.sync();
 
-    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");
+    QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp");
     passphraseTemp.clear();
     passphraseTemp.sync();
 }
@@ -119,7 +119,7 @@ void encryptSupport::newPassphraseDialog()
     f.close();
     passphraseConf.setValue("iv", ivInit);
     passphraseConf.sync();
-    QSettings passphraseTemp(QSettings::SystemScope,"freoffice-encryption-support-temp.conf");
+    QSettings passphraseTemp(QSettings::SystemScope,"freoffice-encryption-support-temp");
     passphraseTemp.setValue("key", passphrase);
     passphraseTemp.sync();
     getDetails();
