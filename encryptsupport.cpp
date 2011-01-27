@@ -55,7 +55,7 @@ void encryptSupport::getDetails()
 void encryptSupport::enterPassphraseDialog()
 {
     QSettings passphraseConf("freoffice", "plugin-settings");
-    passphraseConf.beginGroup("encryption-support");
+    passphraseConf.beginGroup("encrypt-support");
     if(!passphraseConf.contains("hash")) {
         newPassphraseDialog();
         return;
@@ -73,9 +73,17 @@ void encryptSupport::enterPassphraseDialog()
             return;
         }
         else if (val == 0) {
-            if(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() == hash.toUtf8())
+            qDebug() << QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() << hash.toUtf8();
+            if(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() == hash.toUtf8()) {
                 break;
-            QMaemo5InformationBox::information(this, "Wrong passphrase.\nEnter again.", QMaemo5InformationBox::NoTimeout);
+            }
+            else {
+                QMaemo5InformationBox::information(this, "Wrong passphrase.\nEnter again.", QMaemo5InformationBox::NoTimeout);
+            }
+        }
+        else if (val == -1) {
+            emit cancelled();
+            return;
         }
     }
     QSettings passphraseTemp(QSettings::SystemScope, "freoffice-encryption-support-temp.conf");

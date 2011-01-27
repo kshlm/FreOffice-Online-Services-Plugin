@@ -42,6 +42,7 @@ LoginWindow::LoginWindow(QWidget *parent)
       settings(new QSettings("freoffice", "plugin-settings", this)),
       cipher(new encryptSupport(this))
 {
+    connect(cipher, SIGNAL(cancelled()), this, SLOT(close()));
     m_authDialog->setupUi(this);
     settings->beginGroup("online-services-plugin");
     QStringList onlineServices;

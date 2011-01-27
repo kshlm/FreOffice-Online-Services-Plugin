@@ -25,6 +25,7 @@ class QByteArray;
 
 class encryptSupport:public QWidget
 {
+    Q_OBJECT
 public:
     encryptSupport(QWidget * parent = 0);
     QString encrypt(const QString &);
@@ -37,6 +38,9 @@ private:
     void newPassphraseDialog();
     void enterPassphraseDialog();
     void deleteSettings();
+
+signals:
+    void cancelled();
 };
 
 #endif // ENCRYPTSUPPORT_H
