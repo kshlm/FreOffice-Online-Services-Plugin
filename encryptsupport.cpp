@@ -65,7 +65,6 @@ void encryptSupport::enterPassphraseDialog()
     QString passphrase;
     while(true) {
         int val = 0;
-//        passphrase = QInputDialog::getText(this,"Enter Passphrase", "Enter the passphrase you used to encrypt.\n This will be done once every session only", QLineEdit::Normal,"");
         passphrase = passphraseDialog::getPassphrase(val, this);
         if(val == 1) {
             QMaemo5InformationBox::information(this,"All saved details will be lost", QMaemo5InformationBox::NoTimeout);
@@ -74,7 +73,6 @@ void encryptSupport::enterPassphraseDialog()
             return;
         }
         else if (val == 0) {
-            qDebug() << QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() << hash.toUtf8();
             if(QCryptographicHash::hash(passphrase.toUtf8(), QCryptographicHash::Sha1).toHex() == hash.toUtf8()) {
                 break;
             }
@@ -107,7 +105,7 @@ void encryptSupport::newPassphraseDialog()
 {
     QString passphrase;
     while("" == passphrase) {
-        passphrase = QInputDialog::getText(this,"New Passphrase", "Please enter a phrase which is long.\nThis phrase will be used to encrypt your passwords and details", QLineEdit::Normal,"");
+        passphrase = QInputDialog::getText(this,"New Passphrase", "Please enter a phrase which is long.\nThis phrase will be used to encrypt your passwords", QLineEdit::Normal,"");
     }
     QSettings passphraseConf("freoffice","plugin-settings");
     passphraseConf.beginGroup("encrypt-support");
