@@ -68,7 +68,7 @@ void encryptSupport::enterPassphraseDialog()
         passphrase = passphraseDialog::getPassphrase(val, this);
         if(val == 1) {
             QMaemo5InformationBox::information(this,"All saved details will be lost", QMaemo5InformationBox::NoTimeout);
-            deleteSaved();
+            deleteSettings();
             newPassphraseDialog();
             return;
         }
