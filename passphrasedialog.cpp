@@ -45,7 +45,7 @@ QString passphraseDialog::getPassphrase(int &val, QWidget *parent) {
     bool accepted = (dialog.exec() == QDialog::Accepted);
 
     if(accepted) {
-        if(dialog->changeClicked) {
+        if(dialog.changeClicked) {
             val = 1;
         }
         else {
