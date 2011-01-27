@@ -46,10 +46,10 @@ QString passphraseDialog::getPassphrase(int &val, QWidget *parent) {
 
     if(accepted) {
         if(this->changeClicked) {
-            val = 1;
+            val = 1
         }
         else {
-            QLineEdit *linedit = dialog.d_func()->linedit;
+            QLineEdit *linedit = dialog.linedit;
             passphrase = linedit->text();
             val = 0;
         }

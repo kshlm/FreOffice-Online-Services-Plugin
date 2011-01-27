@@ -3,6 +3,9 @@
 
 #include <QDialog>
 
+class QLineEdit;
+class QPushButton;
+
 class passphraseDialog : public QDialog
 {
     Q_OBJECT
@@ -13,6 +16,10 @@ public:
 private:
     bool okClicked;
     bool changeClicked;
+
+    QLineEdit *linedit;
+    QPushButton *okButton;
+    QPushButton *changeButton;
 
     void init();
 
